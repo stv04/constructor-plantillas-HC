@@ -1,0 +1,25 @@
+{
+  "name": "constructor-plantillas-HC",
+  "version": "1.0.0",
+  "description": "Constructor Plantillas HC",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stv04/constructor-plantillas-HC.git"
+  },
+  "scripts": {
+    "start": "grapesjs-cli serve",
+    "build": "grapesjs-cli build",
+    "bump": "npm version patch -m 'Bump v%s'",
+    "db": "json-server --watch db.json"
+  },
+  "keywords": [
+    "grapesjs",
+    "plugin"
+  ],
+  "devDependencies": {
+    "grapesjs-cli": "^3.0.0",
+    "json-server": "^0.17.0"
+  },
+  "license": "MIT"
+}

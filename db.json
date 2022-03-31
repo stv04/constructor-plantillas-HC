@@ -1,0 +1,144 @@
+{
+    "maestros": [
+        {
+            "iddatomaestro": 1,
+            "titulodato": "departamentos",
+            "dato": "[\"Boyacá\", \"cundinamarca\", \"Quindio\"]",
+            "idrelacion": 1,
+            "relacion": null
+        },
+        {
+            "iddatomaestro": 2,
+            "titulodato": "dedicacion",
+            "dato": "[\"Tiempo completo\", \"Medio tiempo\", \"Catedra\"]",
+            "idrelacion": 2,
+            "relacion": null
+        },
+        {
+            "iddatomaestro": 3,
+            "titulodato": "ciudadesboyaca",
+            "dato": "[\"Motavita\", \"Tunja\", \"Sesquilé\"]",
+            "idrelacion": 1,
+            "relacion": 0
+        },
+        {
+            "iddatomaestro": 4,
+            "titulodato": "ciudadescundinamarca",
+            "dato": "[\"Chila\", \"Zupaquira\", \"Cota\"]",
+            "idrelacion": 1,
+            "relacion": 1
+        },
+        {
+            "iddatomaestro": 5,
+            "titulodato": "ciudadesquindio",
+            "dato": "[\"Armenia\", \"Zalento\"]",
+            "idrelacion": 1,
+            "relacion": 2
+        },
+        {
+            "iddatomaestro": 6,
+            "titulodato": "ciudadescundinamarca2",
+            "dato": "[\"Ciudad2\", \"Ciudad3\"]",
+            "idrelacion": 1,
+            "relacion": 1
+        }, {
+            "iddatomaestro": 7,
+            "titulodato": "barrioArm",
+            "dato":"[\"barrioArmenia1\", \"barrioArmenia2\", \"barrioArmenia3\"]",
+            "idrelacion": 5,
+            "relacion": 0
+        }, {
+            "iddatomaestro": 8,
+            "titulodato": "barrioZal",
+            "dato":"[\"barrioZalento1\", \"barrioZalento2\"]",
+            "idrelacion": 5,
+            "relacion": 1
+        }, {
+            "iddatomaestro": 8,
+            "titulodato": "barrioZal",
+            "dato":"[\"motavita1\", \"motavita2\"]",
+            "idrelacion": 3,
+            "relacion": 0
+        }
+    ],
+    "grupo_hist": [{
+        "CD_CODI_GRHI": "datos_de_identifica_0006_1",
+        "NU_NUME_GRHI": 1,
+        "TX_TITULO_GRHI": "Datos de identificación"
+    }, {
+        "CD_CODI_GRHI": "nombre_0006_2",
+        "NU_NUME_GRHI": 2,
+        "TX_TITULO_GRHI": "Nombre"
+    }, {
+        "CD_CODI_GRHI": "apellido_0006_3",
+        "NU_NUME_GRHI": 3,
+        "TX_TITULO_GRHI": "Apellidos"
+    }, {
+        "CD_CODI_GRHI": "celular_0006_1",
+        "NU_NUME_GRHI": 4,
+        "TX_TITULO_GRHI": "Celular"
+    }], 
+    "r_plan_grup": [{
+        "NU_NUME_PLHI_RPG": 1,
+        "NU_NUME_GRHI_RPG": 1,
+        "NU_INDI_RPG": 1,
+        "NU_INGR_RPG": 0,
+        "NU_NUGR_RPG": 0,
+
+        "NU_TOP_RPG": "posicion y (min:3000)",
+        "NU_LEFT_RPG": "posicion x (min: 1000)",
+        "NU_HEIGHT_RPG": "altura ",
+        "NU_WIDTH_RPG": "ancho",
+        "TX_BORDES_RPG": "bordes (1;0;0;0) (izq;top;der;inferior)",
+        "TX_hxCOLORROTULO_RPG": "fondo rotulo",
+        "TX_hxCOLORLETRA_RPG": "color letra rotulo",
+        "NU_ROTULOTOTALANCHO_RPG": "Si el rotulo abarca todo el ancho:bool",
+        "NU_ALINEAROTULO_RPG": "Alineacion:number",
+        "NU_TAMFUENTE_RPG": "font-size",
+        "NU_ROTULOPERPEN_RPG": "orientacion del rotulo",
+        "NU_ROTULOVISIBLE_RPG": "Si el r{otulo es visible:bool",
+        "NU_NEGRILLA_RPG": "negrita para el rotulo",
+        "NU_ALINEAROTULOVERTICAL_RPG": "la alineacion para cual el rotulo está vertical",
+        "TX_COLORFONDO_RPG": "color fondo del grupo"
+
+    }],
+    "r_plan_conc": [{
+        "NU_NUME_PLHI_RPC": "1",
+        "NU_NUME_COHI_RPC": 1,
+        "NU_NUME_GRHI_RPC": 1,
+        "NU_INGR_RPC": 1,
+        "NU_INDI_RPC": 0,
+        "NU_TOP_RPC": "posicion del concepto eje y",
+        "NU_LEFT_RPC": "Alto del concepto",
+        "NU_WIDTH_RPC": "Ancho del concepto",
+        "NU_PATH_FILE": "sirve para fórmulas",
+        "TX_NOMBRPT_RPC": null,
+        "TX_FORMRPT_RPC": null,
+        "NU_VISIBLE_RPC": "visibilidad del concepto:bool",
+        "NU_EDITA_RPC": null,
+        "NU_INDIDEP_RPC": -1,
+        "TX_CAMPOSASOCIA_RPC": null,
+        "TX_hxCOLORLETRA_RPC": "# color letra titulo concepto",
+        "NU_ROTULOTOTALANCHO_RPC": "si el rotulo ocupará el ancho del concepto",
+        "NU_ALINEAROTULO_RPC": "alineación delrótulo",
+        "TX_IDGROP_RPC": "Referencia para indicar grupo de opciones",
+        "TX_KEYESTILO_RPC": null,
+        "NU_TAMFUENTE_RPC": "tamaño letra concepto",
+        "NU_ROTULOPERPEN_RPC": "Si la posición del rotulo del concepto será vertical",
+        "NU_ROTULOVISIBLE_RPC": "Visibilidad titulo concepto",
+        "NU_INVACTASO_RPC": null,
+        "NU_NEGRILLA_RPC": "si el título del concepto está en negrita",
+        "NU_ALINEAROTULOVERTICAL_RPC": "alineacion del rotulo",
+        "TX_COLORFONDO_RPC": "Color fondo rotulo",
+        "TX_hxCOLORROTULO_RPC": "Color rotulo",
+        "TX_ALINEAROTULO_RPC": null,
+        "NU_ORDEN_COLDEP_RPC": null,
+        "AUTO_INC_RPC": null,
+        "ES_SEMA_RPC": null,
+        "TX_DESC_SEMA_RPC": null,
+        "TX_VALOR_SEMA_RPC": null,
+        "TX_RELA_SEMA_RPC": null,
+        "TX_COLOR_SEMA_RPC": null
+
+    }]
+}
