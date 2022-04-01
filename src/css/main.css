@@ -1,5 +1,87 @@
-@import "~grapesjs/dist/css/grapes.min.css";
+/* Colores: 
+rgba(31,115,182,.8) - Botones 
+rgba(3,169,244,.8) - Scrolll */
 
 body {
-    color: red
+    background-image: url("../img/fondo.jpeg");
+}
+
+.visualizador {
+    height: calc(100vh - 42px);
+}
+
+.quarter {
+    display: grid;
+    grid-template-columns: 18% 1fr;
+}
+
+.panel_top {
+    padding: 0;
+    width: 100%;
+    justify-content: center;
+    height: 42px;
+}
+
+.rest-panel-top {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+}
+
+.btn-panel {
+    padding: .5em;
+    background-color: transparent;
+    border: none;
+    color: aliceblue;
+    border-radius: .25em;
+}
+.btn-panel:active {
+    padding: .5em;
+    background-color: transparent;
+    border: rgb(31,115,182);;
+}
+
+.panel-managers {
+    height: calc(100vh - 42px);
+    overflow: hidden;
+}
+
+#managers {
+    overflow: auto;
+    height: calc(100vh - 42px);
+}
+
+.scroller::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scroller::-webkit-scrollbar-thumb {
+    background: rgba(3,169,244,.8);
+}
+
+.scroller::-webkit-scrollbar-thumb:hover {
+    background: rgb(3,169,244);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-volver {
+    z-index: 2;
+    bottom: 10px;
+    left: 5px;
+    padding: .5em;
+    background-color: rgba(31,115,182,.8);
+    color: aliceblue;
+    border-radius: .25em;
+    opacity: 0.5;
+}
+
+.btn-volver:hover {
+    transform: scale(1.4,1.4);
+    background-color: rgb(31,115,182);
+    opacity: 1;
+}
+
+.btn-volver:active {
+    transform: scale(1.2,1.2);
 }

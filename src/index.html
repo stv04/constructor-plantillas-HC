@@ -15,6 +15,9 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/graspes.css">
     <style>
       .superficie-diente:hover {
         stroke: blue;
@@ -154,10 +157,119 @@
         </svg>
     </div>
       
-    <button id="ver-json" class="btn btn-primary">
+    <button id="ver-json2" class="d-none btn btn-primary">
       Ver json en la consola
     </button>
-    <div id="gjs"></div>
+    <div id="constructor" class="constructor d-none">
+        <span id="btn_volver-crear_plantilla" class="btn-volver position-absolute">
+            <i class="fa fa-arrow-left"></i>
+        </span>
+        <div class="panel_top quarter">
+            <ul class="nav nav-pills nav-fill text-light" id="switcher_manager" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="styleManager-tab" data-bs-toggle="tab" data-bs-target="#styleManager" type="button" role="tab" aria-controls="styleManager" aria-selected="true">
+                      <span title="Abrir administrador de estilos" class="text-light fa fa-paint-brush"></span>
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="traitManager-tab" data-bs-toggle="tab" data-bs-target="#traitManager" type="button" role="tab" aria-controls="traitManager" aria-selected="false">
+                      <span class="text-light fa fa-gear"></span>
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="layerManager-tab" data-bs-toggle="tab" data-bs-target="#layerManager" type="button" role="tab" aria-controls="layerManager" aria-selected="false">
+                      <span class="text-light fa fa-bars"></span>
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="blockManager-tab" data-bs-toggle="tab" data-bs-target="#blockManager" type="button" role="tab" aria-controls="blockManager" aria-selected="false">
+                      <span class="text-light fa fa-th-large"></span>
+                  </button>
+                </li>
+            </ul>
+
+            <div class="rest-panel-top" id="buttons-panel-top">
+                <div>
+                    <button class="btn btn-panel changeable" data-command="core:component-outline">
+                        <i class="fa fa-square-o"></i>
+                    </button>
+                    <button class="btn btn-panel" data-command="core:undo">
+                        <i class="fa fa-rotate-left"></i>
+                    </button>
+                    <button class="btn btn-panel" data-command="core:redo">
+                        <i class="fa fa-rotate-right"></i>
+                    </button>
+                    <button class="btn btn-panel" id="ver-json">
+                        <i class="fa fa-save"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="visualizador quarter">
+            <div class="gjs-one-bg panel-managers">
+                <div class="tab-content scroller" id="managers">
+                    <div class="tab-pane fade" id="styleManager" role="tabpanel" aria-labelledby="styleManager-tab"></div>
+                    <div class="tab-pane fade" id="traitManager" role="tabpanel" aria-labelledby="traitManager-tab"></div>
+                    <div class="tab-pane fade" id="layerManager" role="tabpanel" aria-labelledby="layerManager-tab"></div>
+                    <div class="tab-pane fade show active" id="blockManager" role="tabpanel" aria-labelledby="blockManager-tab"></div>
+                </div>
+            </div>
+            <div id="gjs"></div>
+        </div>
+    </div>
+    <div id="ventana-configuraciones" class="container">
+        <div id="formulario-nueva-historia">
+            <div class="card mt-4">
+                <form id="form-crear-plantilla" class="card-body">
+                    <h3>Diseño de formatos de historia clínica</h3>
+                    <div class="form-group">
+                      <label for="plantilla_hc-titulo">Título</label>
+                      <input type="text" class="form-control" name="CD_NOMB_FIN" id="plantilla_hc-titulo" aria-describedby="emailHelp">
+                    </div>
+                    <div class="row  mt-3">
+                        <div class="form-group col">
+                            <label>Estado</label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="NU_ESTA_PLHI" id="plantilla_hc-estado_activo" value="1" checked>
+                                    <label class="form-check-label" for="plantilla_hc-estado_activo">Activo</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="NU_ESTA_PLHI" id="plantilla_hc-estado_inactivo" value="0">
+                                    <label class="form-check-label" for="plantilla_hc-estado_inactivo">Inactivo</label>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="form-group col">
+                            <label for="plantilla_hc-ambito">Ámbito</label>
+                            <select class="form-select" name="plantilla_hc-ambito" id="plantilla_hc-ambito">
+                              <option value="SinAsignar">Sin asignar</option>
+                              <option value="Ambulatorio">Ambulatorio</option>
+                              <option value="Hospitalizacion">Hospitalización</option>
+                              <option value="Urgencias">Urgencias</option>
+                              <option value="Triage">Triage</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group col">
+                            <label for="plantilla_hc-orientacion">Orientación página</label>
+                            <select class="form-select" name="NU_ORIENTAPAG_PLHI" id="plantilla_hc-orientacion">
+                              <option value="0">Vertical</option>
+                              <option value="1">Horizontal</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group form-check mt-3">
+                      <input type="checkbox" class="form-check-input" name="plantilla_hc-adjuntos" id="plantilla_hc-adjuntos">
+                      <label class="form-check-label" for="plantilla_hc-adjuntos">Permitir archivos adjuntos</label>
+                    </div>
+
+                    <button type="submit" id="btn-crear-plantilla" class="btn btn-primary mt-3">Diseñar</button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <div
       class="modal fade"
@@ -497,7 +609,7 @@
       </div>
     </div>
 
-    <div class="m-3 border">
+    <div class="m-3 border d-none">
         <h3>Organización de elementos para hacer alución a un concepto</h3>
         <div>
             <style>
@@ -528,7 +640,7 @@
         </div>
     </div>
    
-    <div class="m-3 border">
+    <div class="m-3 border d-none">
         <h3>Organización de elementos para hacer alución a un Grupo</h3>
         
         <div>

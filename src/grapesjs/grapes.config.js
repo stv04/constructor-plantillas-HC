@@ -39,11 +39,26 @@ export default () => grapesjs.init({
     canvas: {
       styles: ["https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"]
     },
+    blockManager: {
+      appendTo: "#blockManager"
+    },
+    traitManager: {
+      appendTo: "#traitManager"
+    },
+    layerManager: {
+      appendTo: "#layerManager"
+    },
     selectorManager: {
+      // appendTo: "#selectorManager",
       componentFirst: true
     },
+    styleManager: {
+      appendTo: "#styleManager"
+    },
     // Avoid any default panel
-    // panels: { defaults: [] },
+    panels: { 
+      defaults: [] 
+    },
     // blockManager: {
     //   // appendTo: "#blocks",
     //   // custom: true,

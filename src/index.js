@@ -1,9 +1,32 @@
+import "./js/viewController.js";
 import grapesConfig from "./grapesjs/grapes.config.js";
 import { typeGrupo, typeRotuloGrupo } from "./grapesjs/types/gridTypes.js";
 
 globalThis.editor = grapesConfig();
 
 document.getElementById("ver-json").addEventListener("click", verJson);
+editor.Commands.add("save-json", verJson);
+
+habilitateComands();
+function habilitateComands() {
+  const els = document.querySelectorAll("[data-command]")
+  .forEach(el => el.addEventListener("click", runCommand))
+}
+
+function runCommand(e) {
+  const command = this.getAttribute("data-command");
+  const isActive = this.classList.contains("active");
+  const changeable = this.classList.contains("changeable");
+
+  if(isActive) {
+    editor.stopCommand(command);
+  } else {
+    editor.runCommand(command);
+  }
+
+  if(changeable)
+  this.classList.toggle("active");
+}
 
 function verJson() {
   const original = editor.getComponents();
