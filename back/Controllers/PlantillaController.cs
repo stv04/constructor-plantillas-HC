@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Oracle.ManagedDataAccess.Client;
+using back.context;
+using back.models;
+using Microsoft.EntityFrameworkCore;
 
 namespace back.Controllers;
 
@@ -7,38 +10,61 @@ namespace back.Controllers;
 [Route("[controller]")]
 public class PlantillaController : ControllerBase
 {
-    private readonly ILogger<PlantillaController> _logger;
-    OracleConnection conexion = new OracleConnection("user id=HIMSCAP;password=ITTASA2017;data source=" + 
-     "(DESCRIPTION=(ADDRESS=(PROTOCOL=tcp)" + 
-     "(HOST=181.129.245.90)(PORT=1521))(CONNECT_DATA="+
-     "(SERVICE_NAME=PROYECTOS)))");
+    private readonly AppDBContextPrueba context;
 
-    public PlantillaController(ILogger<PlantillaController> logger)
+    public PlantillaController(AppDBContextPrueba _context)
     {
-        _logger = logger;
+        this.context = _context;
     }
 
-    [HttpGet(Name = "getPlantillas")]
-    public IActionResult Get()
+    [HttpGet("getGrupos")]
+    public async Task<List<PlantillaHist>> GetGrupos()
+    { 
+        return await context.PLANTILLA_HIST.Take(10).ToListAsync();
+    }
+
+    [HttpPost("setFinalidad")]
+    public async Task<IActionResult> AddFinalidad([FromForm] FinalidadHist finalidad)
     {
-        // conexion.Open();
-        // OracleCommand comando = new OracleCommand("select top 1  * from grupo_hist");
-        // OracleDataReader lector = comando.ExecuteReader();
+        try {
+            int lastId = await context.FINALIDAD_HIST.MaxAsync(f => f.CD_CODI_FIN);
+            finalidad.CD_CODI_FIN = lastId + 1;
 
-        OracleCommand comando = conexion.CreateCommand();
+            await context.FINALIDAD_HIST.AddAsync(finalidad);
+            await context.SaveChangesAsync();
 
-        conexion.Open();
-        comando.BindByName = true;
-        comando.CommandText = "select * from grupo_hist FETCH FIRST 10 ROWS ONLY";
-
-        OracleDataReader lector = comando.ExecuteReader();
-
-        while(lector.Read())
-        {
-            Console.WriteLine("Prueba => " + lector["TX_TITULO_GRHI"]);
+            return Ok(finalidad);
+        } catch {
+            return BadRequest("Hubo un error");
         }
+    }
 
-        // lector.Dispose();
-        return Ok("En revisión");
+    [HttpPost]
+    public async Task<IActionResult> AddPlantilla([FromForm] PlantillaHist plantilla)
+    {
+        try
+        {
+            int lastId = await context.PLANTILLA_HIST.MaxAsync(f => f.NU_NUME_PLHI);
+            plantilla.NU_NUME_PLHI = lastId + 1;
+            plantilla.CD_CODI_ESP_PLHI = "".PadRight(1);
+            
+            plantilla.NU_AUTO_ENPL_PLHI = 15;
+            plantilla.NU_HEIGHT_PLHI = 8210; //Alto de la hoja
+            plantilla.NU_PADRE_HIST = 0;
+            plantilla.NU_PERPRINT_PLHI = 0;
+            plantilla.NU_ESODOEVO_PLHI = 0;
+            plantilla.ES_PSICOACTIVO = 0;
+            plantilla.ES_CONTRAREFERENCIA = 0;
+
+            await context.PLANTILLA_HIST.AddAsync(plantilla);
+            await context.SaveChangesAsync();
+            return Ok(plantilla);
+
+        }
+        catch (System.Exception ex)
+        {
+            
+            return BadRequest(ex);
+        }
     }
 }

@@ -1,3 +1,5 @@
+import { crearFinalidadHist, crearPlantillaHist } from "../aderencia/plantillaHist.js";
+
 listener("#btn_volver-crear_plantilla", "click", volverCrearPlantilla);
 listener("#form-crear-plantilla", "submit", accederCrearPlantilla);
 
@@ -18,20 +20,16 @@ function volverCrearPlantilla() {
     formularioCreacion.classList.remove("d-none");
 }
 
-function accederCrearPlantilla(e) {
+async function accederCrearPlantilla(e) {
     e.preventDefault();
-    const plantillaCreada = {};
 
     const formData = new FormData(e.target);
+    
+    // const finalidad = await crearFinalidadHist(formData);
+    // console.log("Finalidad creada => ", finalidad);
 
-    for (let ent of formData.entries()) {
-        plantillaCreada[ent[0]] = ent[1];
-    }
-
-    plantillaCreada["CD_CODI_ESP_PLHI"] = "";
-    plantillaCreada["NU_AUTO_ENPL_PLHI"] = 15;
-
-    console.log(plantillaCreada);
+    // const plantilla = await crearPlantillaHist(formData);
+    // console.log("Plantilla creada => ", plantilla);
 
     constructor.classList.remove("d-none");
     formularioCreacion.classList.add("d-none");
