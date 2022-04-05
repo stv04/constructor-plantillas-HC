@@ -1,9 +1,11 @@
 import '//unpkg.com/grapesjs';
 
 import es from "./locale/es.js";
+import commands from './commands/commands.js';
 import "//unpkg.com/grapesjs-preset-webpage";
 import "//unpkg.com/grapesjs-plugin-export";
 import "./plugins/config.js";
+
 
 export default () => grapesjs.init({
     // Indicate where to init the editor. You can also pass an HTMLElement
@@ -59,6 +61,7 @@ export default () => grapesjs.init({
     panels: { 
       defaults: [] 
     },
+    commands
     // blockManager: {
     //   // appendTo: "#blocks",
     //   // custom: true,

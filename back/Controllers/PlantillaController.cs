@@ -18,9 +18,41 @@ public class PlantillaController : ControllerBase
     }
 
     [HttpGet("getGrupos")]
-    public async Task<List<PlantillaHist>> GetGrupos()
+    public async Task<List<GrupoHist>> GetGrupos()
     { 
-        return await context.PLANTILLA_HIST.Take(10).ToListAsync();
+        return await context.GRUPO_HIST.Take(10).ToListAsync();
+    }
+
+    [HttpPost("createGrupo")]
+    public async Task<IActionResult> createGrupo([FromForm] GrupoHist nuevoGrupo)
+    {
+        try {
+            int? lastId = await context.GRUPO_HIST.MaxAsync(f => f.NU_NUME_GRHI);
+            nuevoGrupo.NU_NUME_GRHI = lastId + 1;
+
+            await context.GRUPO_HIST.AddAsync(nuevoGrupo);
+            await context.SaveChangesAsync();
+            return Ok(nuevoGrupo);
+        } catch {
+            return BadRequest("No se pudo crear grupo");
+        }
+    }
+    
+    [HttpPut("updateGrupo")]
+    public async Task<IActionResult> updateGrupo([FromForm] GrupoHist grupo)
+    {
+        try {
+            var taked = await context.R_PLAN_GRUP.FirstOrDefaultAsync(r => r.NU_NUME_GRHI_RPG == grupo.NU_NUME_GRHI);
+
+            if(taked != null) return BadRequest("Este grupo ya esta siendo utilizado.");
+
+            
+            context.GRUPO_HIST.Update(grupo);
+            await context.SaveChangesAsync();
+            return Ok(grupo);
+        } catch {
+            return BadRequest("No se pudo crear grupo");
+        }
     }
 
     [HttpPost("setFinalidad")]

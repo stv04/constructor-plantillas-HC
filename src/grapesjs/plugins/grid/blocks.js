@@ -11,7 +11,7 @@ export default (editor, opts) => {
 
     // 1 column
     bm.add(typeCol1, {
-        label: "1 columna",
+        label: "GRUPOS",
         attributes: {class:'gjs-fonts gjs-f-b1'},
         content: {
             type: typeGrupo,

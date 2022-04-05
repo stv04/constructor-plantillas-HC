@@ -1,5 +1,6 @@
 import components from './components.js';
 import blocks from './blocks.js';
+import traits from './traits.js';
 
 export default (editor, opts = {}) => {
   const config = {
@@ -24,4 +25,5 @@ export default (editor, opts = {}) => {
   // Add blocks
   components(editor, config);
   blocks(editor, config);
+  traits(editor);
 };

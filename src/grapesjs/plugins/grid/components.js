@@ -16,7 +16,24 @@ export default (editor, opts) => {
           style: {
             height: "66px",
             width: "600px"
-          }
+          },
+          traits: [{
+            name: "grupoHist",
+            label: "Datos",
+            type: "grupos-options"
+          }, {
+            type: 'button',
+            label: "Actualizar",
+            text: 'Modificar',
+            full: true, // Full width button
+            command: "editar-grupo_hist"
+          }, {
+            type: 'button',
+            label: "Crear",
+            text: 'Nuevo',
+            full: true, // Full width button
+            command: "crear-grupo_hist"
+          }]
         }
       }
     });
@@ -42,14 +59,14 @@ export default (editor, opts) => {
     comp.addType("rotuloGrupo", {
       isComponent: el => {
         console.log(el);
-        return el.tagName === "H4"
+        return el.tagName === "H6"
       },
       extend: 'rotulo',
 
       model: {
         defaults: {
-          tagName: "h4",
-          components: "Título rótulo"
+          tagName: "h6",
+          components: "Seleccione grupo"
         }
       }
     });    
