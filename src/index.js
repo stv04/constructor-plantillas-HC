@@ -1,8 +1,7 @@
 import "./js/viewController.js";
-import grapesConfig from "./grapesjs/grapes.config.js";
+import "./grapesjs/index.js";
 import { typeGrupo, typeRotuloGrupo } from "./grapesjs/types/gridTypes.js";
 
-globalThis.editor = grapesConfig();
 
 const quitHash = hexa => hexa.replace("#", "");
 

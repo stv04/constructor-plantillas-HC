@@ -7,7 +7,7 @@ import "//unpkg.com/grapesjs-plugin-export";
 import "./plugins/config.js";
 
 
-export default () => grapesjs.init({
+globalThis.editor = grapesjs.init({
     // Indicate where to init the editor. You can also pass an HTMLElement
     container: '#gjs',
     i18n: {
@@ -21,7 +21,7 @@ export default () => grapesjs.init({
     width: 'auto',
     // Disable the storage manager for the moment
     storageManager: false,
-    plugins: ["basicPlugin", "formPlugin", "gjs-plugin-export"],
+    plugins: ["formPlugin", "gridPlugin"],
     pluginsOpts: {
       'gjs-preset-webpage': {
           exportOpts: false,
@@ -106,4 +106,4 @@ export default () => grapesjs.init({
     //   }]
     // },
     // style: styles,
-})
+});
