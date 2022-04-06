@@ -1,4 +1,5 @@
-import { typeCol1, typeCol2, typeCol3, typeCol4, typeCol6,  typeGrupo,  typeRow } from "../../types/gridTypes.js";
+import { typeInput } from "../../types/formTypes.js";
+import { typeCol1, typeCol2, typeCol3, typeCol4, typeCol6,  typeConcepto,  typeGrupo,  typeRotulo,  typeRow } from "../../types/gridTypes.js";
 
 const styleMinHeight = '<style>.min-h{min-height: 70px}</style>'
 
@@ -10,13 +11,35 @@ export default (editor, opts) => {
     }
 
     // 1 column
-    bm.add(typeCol1, {
+    bm.add(typeGrupo, {
         label: "GRUPOS",
         attributes: {class:'gjs-fonts gjs-f-b1'},
         content: {
             type: typeGrupo,
             components: [
-                {type: "rotuloGrupo"}
+                {type: typeRotulo},
+                {
+                    type: typeConcepto,
+                    components: [
+                        {type: typeRotulo, content: "Seleccione concepto"},
+                        {type: typeInput}
+                    ],
+                    isImportant: true
+                }
+            ],
+            isImportant: true,
+        },
+        category
+    });
+
+    bm.add(typeConcepto, {
+        label: "CONCEPTO",
+        attributes: {class:'gjs-fonts gjs-f-b1'},
+        content: {
+            type: typeConcepto,
+            components: [
+                {type: typeRotulo, content: "Seleccione concepto"},
+                {type: typeInput}
             ],
             isImportant: true,
         },

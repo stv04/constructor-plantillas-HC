@@ -22,6 +22,12 @@ public class PlantillaController : ControllerBase
     { 
         return await context.GRUPO_HIST.Take(10).ToListAsync();
     }
+    
+    [HttpGet("getConceptos")]
+    public async Task<List<ConceptoHist>> GetConceptos()
+    { 
+        return await context.CONCEPTO_HIST.Take(10).ToListAsync();
+    }
 
     [HttpPost("createGrupo")]
     public async Task<IActionResult> createGrupo([FromForm] GrupoHist nuevoGrupo)
@@ -45,7 +51,6 @@ public class PlantillaController : ControllerBase
             var taked = await context.R_PLAN_GRUP.FirstOrDefaultAsync(r => r.NU_NUME_GRHI_RPG == grupo.NU_NUME_GRHI);
 
             if(taked != null) return BadRequest("Este grupo ya esta siendo utilizado.");
-
             
             context.GRUPO_HIST.Update(grupo);
             await context.SaveChangesAsync();

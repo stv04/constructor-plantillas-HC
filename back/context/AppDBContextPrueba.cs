@@ -12,5 +12,6 @@ namespace back.context
         public DbSet<RPlanGrup> R_PLAN_GRUP {get; set;}
         public DbSet<PlantillaHist> PLANTILLA_HIST {get; set;} 
         public DbSet<FinalidadHist> FINALIDAD_HIST {get; set;}
+        public DbSet<ConceptoHist> CONCEPTO_HIST {get; set;}
     }
 }

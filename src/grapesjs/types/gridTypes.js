@@ -5,4 +5,6 @@ export const typeCol4 = 'column4';
 export const typeCol6 = 'column6';
 export const typeRow = 'row';
 export const typeGrupo = 'grupo';
+export const typeConcepto = 'concepto';
+export const typeRotulo = 'rotulo';
 export const typeRotuloGrupo = 'rotuloGrupo';

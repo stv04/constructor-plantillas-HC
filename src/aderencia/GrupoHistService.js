@@ -1,5 +1,5 @@
 const endPoint = "https://localhost:7000/Plantilla";
-
+const idSelectorGrupos = "lista-grupo_hist";
 
 class GrupoHist {
     async fetchGrupos() {
@@ -29,10 +29,11 @@ class GrupoHist {
             optsEl.appendChild(opt);
         });
     
-        const cambiador = document.querySelector("[list="+idSelectorGrupos+"]");
-        cambiador.value= grupos[0].nU_NUME_GRHI + ":" + grupos[0].tX_TITULO_GRHI;
-    
-        target.firstChild.innerHTML = cambiador.value.split(":")[1];
+        // const cambiador = document.querySelector("[list="+idSelectorGrupos+"]");
+        // cambiador.value= grupos[0].nU_NUME_GRHI + ":" + grupos[0].tX_TITULO_GRHI;
+
+        // console.log(target);
+        // target.view.el.firstChild.innerHTML = cambiador.value.split(":")[1];
     }
 
     unshiftGrupo(obj) {

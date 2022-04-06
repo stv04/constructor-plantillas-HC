@@ -1,5 +1,7 @@
+import conceptoHistService from "../../../aderencia/conceptoHistService.js";
 import cargaDinamicaDatosMaestros from "../../scripts/cargaDinamicaDatosMaestros.js";
-import { typeOption } from "../../types/formTypes.js";
+import { typeButton, typeOption, typeTextarea } from "../../types/formTypes.js";
+import { typeRotulo } from "../../types/gridTypes.js";
 
 const endPoint = "https://localhost:7000/Plantilla";
 const dataInitial = [{
@@ -61,12 +63,16 @@ export default function (editor) {
             const { model, target } = this;
             const [id, nombre] = model.get('value').trim().split(":");
 
-            console.log(target);
             // target.addAttributes({"data-idGrupo": id})
-            target.components().reset({
-                type: "rotuloGrupo",
-                components: nombre
+            const rotulo = target.components().models.find(el => el.attributes.type === typeRotulo);
+       
+            console.log(rotulo);
+            rotulo.set({
+                content: nombre
             });
+            target.set({
+                idGrupoDB: parseInt(id)
+            })
             target.view.render();
         },
 
@@ -80,6 +86,55 @@ export default function (editor) {
                 this.$input.setAttribute("list", idSelectorGrupos);
 
                 listarGrupos(target);
+
+            }
+            return this.$input;
+        }
+    });
+
+    // Rasgo para consultar conceptos a la base de datos
+    trm.addType("conceptos-options", {
+        events: {
+            keyup: "onChange"
+        },
+
+        onValueChange() {
+            const { model, target } = this;
+            const [id, nombre] = model.get('value').trim().split(":");
+
+            // target.addAttributes({"data-idGrupo": id})
+            const rotulo = target.components().models.find(el => el.attributes.type === typeRotulo);
+            const elemento = target.components().models[1];
+       
+            // elemento.set({
+            //     content: typeButton,
+            // });
+
+            // rotulo.set({
+            //     content: nombre
+            // });
+            // target.set({
+            //     idGrupoDB: parseInt(id)
+            // });
+
+            target.components().reset([
+                {type: typeRotulo, content: "Cambio de concepto"},
+                {type: typeButton}
+            ])
+            target.view.render();
+        },
+
+        getInputEl() {
+            const {target} = this;
+            const conceptos = conceptoHistService
+            if (!this.$input) {
+                console.log(this);
+                const optionsArr = [];
+                const options = this.target.components();
+                this.$input = document.createElement("input");
+                this.$input.setAttribute("list", conceptos.idSelectorConceptos);
+
+                conceptos.listarConceptos();
 
             }
             return this.$input;

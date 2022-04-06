@@ -1,18 +1,18 @@
 import modalConfiguracionOrtodoncia from "../../scripts/modalConfiguracionOrtodoncia.js";
-import { typeCol1, typeCol2, typeCol3, typeCol4, typeCol6, typeGrupo, typeRow } from "../../types/gridTypes.js";
+import { typeCol1, typeCol2, typeCol3, typeCol4, typeCol6, typeConcepto, typeGrupo, typeRotulo, typeRow } from "../../types/gridTypes.js";
 
 export default (editor, opts) => {
     const comp = editor.DomComponents;
 
     comp.addType(typeGrupo, {
-      isComponent: el => el.tagName == 'DIV' && el.classList.contains("row"),
+      isComponent: el => el.tagName == 'DIV',
           
       model: {
         defaults: {
           draggable: "*",
           droppable: "*",
           tagName: 'div',
-          attributes: { style: "position: absolute;" },
+          attributes: { style: "position: absolute;", class: "grupo" },
           style: {
             height: "66px",
             width: "600px"
@@ -38,15 +38,50 @@ export default (editor, opts) => {
       }
     });
 
-    comp.addType("rotulo", {
-      extend: "text",
+    comp.addType(typeConcepto, {
+      isComponent: el => el.tagName == 'DIV',
+          
+      model: {
+        defaults: {
+          draggable: ".grupo",
+          droppable: false,
+          tagName: 'div',
+          attributes: { style: "position: absolute;" },
+          traits: [{
+            name: "grupoHist",
+            label: "Datos",
+            type: "conceptos-options"
+          }, {
+            type: 'button',
+            label: "Actualizar",
+            text: 'Modificar',
+            full: true, // Full width button
+            command: "editar-grupo_hist"
+          }, {
+            type: 'button',
+            label: "Crear",
+            text: 'Nuevo',
+            full: true, // Full width button
+            command: "crear-grupo_hist"
+          }]
+        }
+      }
+    });
+
+    comp.addType(typeRotulo, {
+      isComponent: el => {
+        console.log(el);
+        return el.tagName === "H6"
+      },
+
       model: {
         defaults: {
           draggable: false,
           droppable: false,
           removable: false,
           copyable: false,
-          components: [],
+          tagName: "h6",
+          content: "Seleccione grupo",
           stylable: [
             "background-color",
             "text-align", "color", "font-size", "display",
@@ -54,22 +89,7 @@ export default (editor, opts) => {
           ]
         }
       }
-    })
-
-    comp.addType("rotuloGrupo", {
-      isComponent: el => {
-        console.log(el);
-        return el.tagName === "H6"
-      },
-      extend: 'rotulo',
-
-      model: {
-        defaults: {
-          tagName: "h6",
-          components: "Seleccione grupo"
-        }
-      }
-    });    
+    })   
 
     comp.addType("odontograma", {
       model: {
