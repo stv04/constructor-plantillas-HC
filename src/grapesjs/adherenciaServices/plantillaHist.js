@@ -1,4 +1,4 @@
-const endpoint = "https://localhost:7000/Plantilla";
+import { endPoint } from "./config.js";
 
 export async function crearPlantillaHist(formData) {
     if(formData.get("NU_PERMADJARCHIVO_PLHI") === "1") {
@@ -7,7 +7,7 @@ export async function crearPlantillaHist(formData) {
         formData.set("NU_PERMADJARCHIVO_PLHI", 0);
     }
 
-    const respuesta = await fetch(endpoint, {
+    const respuesta = await fetch(endPoint, {
         method: "POST",
         body: formData
     }).then(d => d.json())
@@ -17,7 +17,7 @@ export async function crearPlantillaHist(formData) {
 }
 
 export async function crearFinalidadHist(formData) {
-    const respuesta = await fetch(endpoint + "/setFinalidad", {
+    const respuesta = await fetch(endPoint + "/setFinalidad", {
         method: "POST",
         body: formData
     }).then(d => d.json())

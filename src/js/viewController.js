@@ -1,4 +1,4 @@
-import { crearFinalidadHist, crearPlantillaHist } from "../aderencia/plantillaHist.js";
+import { crearFinalidadHist, crearPlantillaHist } from "../grapesjs/adherenciaServices/plantillaHist.js";
 
 listener("#btn_volver-crear_plantilla", "click", volverCrearPlantilla);
 listener("#form-crear-plantilla", "submit", accederCrearPlantilla);

@@ -1,4 +1,4 @@
-const endPoint = "https://localhost:7000/Plantilla";
+import { endPoint } from "./config.js";
 const idSelectorConceptos = "lista-concepto_hist";
 
 class ConceptoHist {
@@ -25,7 +25,7 @@ class ConceptoHist {
             optsEl = document.createElement("datalist");
             optsEl.setAttribute("id", idSelectorConceptos);
             console.log(optsEl);
-            document.body.appendChild(optsEl);
+            document.querySelector("#gjs").appendChild(optsEl);
         }
 
         optsEl.innerHTML = "";
@@ -33,12 +33,12 @@ class ConceptoHist {
         conceptos.forEach(d => {
             const opt = document.createElement("option");
             opt.innerHTML = d.tX_TITULO_COHI;
-            opt.value = d.nU_NUME_COHI + ":" + d.tX_TITULO_COHI;
+            opt.value = d.nU_TIPO_COHI + "::" + d.nU_NUME_COHI + "::" + d.tX_TITULO_COHI;
             optsEl.appendChild(opt);
         });
     }
 
-    unshiftGrupo(obj) {
+    unshift(obj) {
         this.conceptos.unshift(obj);
     }
 }

@@ -1,10 +1,13 @@
-const endPoint = "https://localhost:7000/Plantilla";
+import { endPoint } from "./config.js";
 const idSelectorGrupos = "lista-grupo_hist";
 
 class GrupoHist {
+    constructor () {
+        this.idSelectorGrupos = idSelectorGrupos;
+    }
+    
     async fetchGrupos() {
         const grupos = await fetch(endPoint + "/getGrupos").then(d => d.json());
-    
         this.grupos = grupos;
         return grupos;
     }
@@ -19,7 +22,7 @@ class GrupoHist {
             optsEl = document.createElement("datalist");
             optsEl.setAttribute("id", idSelectorGrupos);
             console.log(optsEl);
-            document.body.appendChild(optsEl);
+            document.querySelector("#gjs").appendChild(optsEl);
         }
     
         grupos.forEach(d => {
@@ -36,7 +39,7 @@ class GrupoHist {
         // target.view.el.firstChild.innerHTML = cambiador.value.split(":")[1];
     }
 
-    unshiftGrupo(obj) {
+    unshift(obj) {
         this.grupos.unshift(obj);
     }
 }

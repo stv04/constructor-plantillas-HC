@@ -16,7 +16,7 @@
       crossorigin="anonymous"
     />
 
-    <link rel="stylesheet" href="css/main.css">
+    <!-- <link rel="stylesheet" href="css/main.css"> -->
     <!-- <link rel="stylesheet" href="css/graspes.css"> -->
     <style>
       .superficie-diente:hover {
@@ -156,6 +156,9 @@
             
         </svg>
     </div>
+
+    <div id="gjs"></div>
+
       
     <button id="ver-json2" class="d-none btn btn-primary">
       Ver json en la consola
@@ -199,7 +202,7 @@
                     <button class="btn btn-panel" data-command="core:redo">
                         <i class="fa fa-rotate-right"></i>
                     </button>
-                    <button class="btn btn-panel" id="ver-json">
+                    <button class="btn btn-panel" data-command="save-json">
                         <i class="fa fa-save"></i>
                     </button>
                 </div>
@@ -214,11 +217,10 @@
                     <div class="tab-pane fade show active" id="blockManager" role="tabpanel" aria-labelledby="blockManager-tab"></div>
                 </div>
             </div>
-            <div id="gjs"></div>
         </div>
     </div>
 
-    <div id="ventana-configuraciones" class="container">
+    <div id="ventana-configuraciones" class="container d-none">
         <div id="formulario-nueva-historia">
             <div class="card mt-4">
                 <form id="form-crear-plantilla" class="card-body">
