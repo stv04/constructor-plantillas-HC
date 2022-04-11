@@ -48,7 +48,7 @@ export default (editor, opts) => {
           tagName: 'div',
           attributes: { style: "position: absolute;" },
           traits: [{
-            name: "grupoHist",
+            name: "conceptoHist",
             label: "Datos",
             type: "conceptos-options"
           }, {
@@ -56,13 +56,13 @@ export default (editor, opts) => {
             label: "Actualizar",
             text: 'Modificar',
             full: true, // Full width button
-            command: "editar-grupo_hist"
+            command: "editar-concepto_hist"
           }, {
             type: 'button',
             label: "Crear",
             text: 'Nuevo',
             full: true, // Full width button
-            command: "crear-grupo_hist"
+            command: "crear-concepto_hist"
           }]
         }
       }

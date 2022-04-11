@@ -10,8 +10,11 @@ namespace back.context
 
         public DbSet<GrupoHist> GRUPO_HIST {get; set;} 
         public DbSet<RPlanGrup> R_PLAN_GRUP {get; set;}
+        public DbSet<ConceptoHist> CONCEPTO_HIST {get; set;}
+        public DbSet<RPlanConc> R_PLAN_CONC {get; set;}
         public DbSet<PlantillaHist> PLANTILLA_HIST {get; set;} 
         public DbSet<FinalidadHist> FINALIDAD_HIST {get; set;}
-        public DbSet<ConceptoHist> CONCEPTO_HIST {get; set;}
+        public DbSet<RPlantillaHist> R_PLANTILLA_HIST {get; set;}
+
     }
 }

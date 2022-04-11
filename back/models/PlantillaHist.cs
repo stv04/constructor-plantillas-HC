@@ -27,4 +27,23 @@ namespace back.models
         public int CD_CODI_FIN { get; set; }
         public string CD_NOMB_FIN { get; set; }
     }
+
+    public class RPlantillaHist
+    {
+        public int NU_FINA_PLHI {get; set;}
+        public int NU_NUME_PLHI_R {get; set;}
+        [Key]
+        public int? NU_PLANTLLA_R {get; set;}
+        public int? NU_CGES_PLHI {get; set;}
+        public int? NU_GECA_PLHI {get; set;}
+        public int? NU_GENE_PLHI {get; set;}
+        public int? NU_MODI_PLHI {get; set;}
+        public string? NU_PRCO_PLHI {get; set;}
+        public int? NU_REDF_PLHI {get; set;}
+        public int? NU_REDI_PLHI {get; set;}
+        public string? NU_SERV_PLHI {get; set;}
+        public int? NU_TIEDF_PLHI {get; set;}
+        public int? NU_TIEDI_PLHI {get; set;}
+        public int? NU_VICA_PLHI {get; set;}
+    }
 }

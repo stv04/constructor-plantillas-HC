@@ -51,6 +51,10 @@ export default function (editor) {
             keyup: "onChange"
         },
 
+        onClick() {
+            console.log("click");
+        },
+
         onValueChange() {
             const { model, target } = this;
             const [idType, idConcept, nombre] = model.get('value').trim().split("::");

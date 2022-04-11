@@ -49,10 +49,10 @@ globalThis.editor = grapesjs.init({
   // layerManager: {
   //   appendTo: "#layerManager"
   // },
-  // selectorManager: {
-  //   // appendTo: "#selectorManager",
-  //   componentFirst: true
-  // },
+  selectorManager: {
+    // appendTo: "#selectorManager",
+    componentFirst: true
+  },
   // styleManager: {
   //   appendTo: "#styleManager"
   // },

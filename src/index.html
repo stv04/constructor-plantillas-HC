@@ -156,11 +156,66 @@
             
         </svg>
     </div>
+    <div id="ventana-configuraciones" class="container">
+        <div id="formulario-nueva-historia">
+            <div class="card mt-4">
+                <form id="form-crear-plantilla" class="card-body">
+                    <h3>Diseño de formatos de historia clínica</h3>
+                    <div class="form-group">
+                      <label for="plantilla_hc-titulo">Título</label>
+                      <input type="text" class="form-control" name="CD_NOMB_FIN" id="plantilla_hc-titulo" aria-describedby="emailHelp">
+                    </div>
+                    <div class="row  mt-3">
+                        <div class="form-group col">
+                            <label>Estado</label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="NU_ESTA_PLHI" id="plantilla_hc-estado_activo" value="1" checked>
+                                    <label class="form-check-label" for="plantilla_hc-estado_activo">Activo</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="NU_ESTA_PLHI" id="plantilla_hc-estado_inactivo" value="0">
+                                    <label class="form-check-label" for="plantilla_hc-estado_inactivo">Inactivo</label>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="form-group col">
+                            <label for="plantilla_hc-ambito">Ámbito</label>
+                            <select class="form-select" name="NU_TIAT_PLHI" id="plantilla_hc-ambito">
+                              <option value="0">Sin asignar</option>
+                              <option value="1">Ambulatorio</option>
+                              <option value="2">Hospitalización</option>
+                              <option value="3">Urgencias</option>
+                              <option value="4">Triage</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group col">
+                            <label for="plantilla_hc-orientacion">Orientación página</label>
+                            <select class="form-select" name="NU_ORIENTAPAG_PLHI" id="plantilla_hc-orientacion">
+                              <option value="0">Vertical</option>
+                              <option value="1">Horizontal</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group form-check mt-3">
+                      <input type="checkbox" class="form-check-input" name="NU_PERMADJARCHIVO_PLHI" id="NU_PERMADJARCHIVO_PLHI" value="1">
+                      <label class="form-check-label" for="NU_PERMADJARCHIVO_PLHI">Permitir archivos adjuntos</label>
+                    </div>
 
-    <div id="gjs"></div>
+                    <button type="submit" id="btn-crear-plantilla" class="btn btn-primary mt-3">Diseñar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="constructor" class="d-none">
+        <div id="gjs"></div>
+    </div>
+
 
       
-    <button id="ver-json2" class="d-none btn btn-primary">
+    <button id="ver-json2" data-command="save-json" class="btn btn-primary">
       Ver json en la consola
     </button>
     <div id="constructor" class="constructor d-none">
@@ -220,59 +275,7 @@
         </div>
     </div>
 
-    <div id="ventana-configuraciones" class="container d-none">
-        <div id="formulario-nueva-historia">
-            <div class="card mt-4">
-                <form id="form-crear-plantilla" class="card-body">
-                    <h3>Diseño de formatos de historia clínica</h3>
-                    <div class="form-group">
-                      <label for="plantilla_hc-titulo">Título</label>
-                      <input type="text" class="form-control" name="CD_NOMB_FIN" id="plantilla_hc-titulo" aria-describedby="emailHelp">
-                    </div>
-                    <div class="row  mt-3">
-                        <div class="form-group col">
-                            <label>Estado</label>
-                            <div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="NU_ESTA_PLHI" id="plantilla_hc-estado_activo" value="1" checked>
-                                    <label class="form-check-label" for="plantilla_hc-estado_activo">Activo</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="NU_ESTA_PLHI" id="plantilla_hc-estado_inactivo" value="0">
-                                    <label class="form-check-label" for="plantilla_hc-estado_inactivo">Inactivo</label>
-                                </div>
-                            </div>
-                        </div>
-    
-                        <div class="form-group col">
-                            <label for="plantilla_hc-ambito">Ámbito</label>
-                            <select class="form-select" name="NU_TIAT_PLHI" id="plantilla_hc-ambito">
-                              <option value="0">Sin asignar</option>
-                              <option value="1">Ambulatorio</option>
-                              <option value="2">Hospitalización</option>
-                              <option value="3">Urgencias</option>
-                              <option value="4">Triage</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group col">
-                            <label for="plantilla_hc-orientacion">Orientación página</label>
-                            <select class="form-select" name="NU_ORIENTAPAG_PLHI" id="plantilla_hc-orientacion">
-                              <option value="0">Vertical</option>
-                              <option value="1">Horizontal</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group form-check mt-3">
-                      <input type="checkbox" class="form-check-input" name="NU_PERMADJARCHIVO_PLHI" id="NU_PERMADJARCHIVO_PLHI" value="1">
-                      <label class="form-check-label" for="NU_PERMADJARCHIVO_PLHI">Permitir archivos adjuntos</label>
-                    </div>
-
-                    <button type="submit" id="btn-crear-plantilla" class="btn btn-primary mt-3">Diseñar</button>
-                </form>
-            </div>
-        </div>
-    </div>
+   
 
     <div
       class="modal fade"
