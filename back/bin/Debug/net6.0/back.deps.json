@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v6.0": {
       "back/1.0.0": {
         "dependencies": {
+          "Microsoft.EntityFrameworkCore.Design": "6.0.3",
           "Microsoft.EntityFrameworkCore.Tools": "6.0.3",
           "Oracle.EntityFrameworkCore": "6.21.5",
           "Oracle.ManagedDataAccess.Core": "3.21.50",

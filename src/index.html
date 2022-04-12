@@ -156,7 +156,7 @@
             
         </svg>
     </div>
-    <div id="ventana-configuraciones" class="container">
+    <div id="ventana-configuraciones" class="container d-none">
         <div id="formulario-nueva-historia">
             <div class="card mt-4">
                 <form id="form-crear-plantilla" class="card-body">
@@ -209,15 +209,21 @@
             </div>
         </div>
     </div>
-    <div id="constructor" class="d-none">
+
+    <div class="d-flex">
+        <button id="ver-json2" data-command="guardar-formulario" class="btn btn-primary">
+            Guardar formulario
+        </button>
+        <select name="" id="selector-formularios"></select>
+    </div>
+    <div id="constructor">
         <div id="gjs"></div>
+        <div id="gjs2"></div>
     </div>
 
 
       
-    <button id="ver-json2" data-command="save-json" class="btn btn-primary">
-      Ver json en la consola
-    </button>
+    
     <div id="constructor" class="constructor d-none">
         <span id="btn_volver-crear_plantilla" class="btn-volver position-absolute">
             <i class="fa fa-arrow-left"></i>

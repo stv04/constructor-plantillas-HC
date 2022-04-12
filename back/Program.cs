@@ -13,6 +13,7 @@ builder.Services.AddSwaggerGen();
 
 var connectionStringTest = builder.Configuration.GetConnectionString("DBPrueba");
 builder.Services.AddDbContext<AppDBContextPrueba>(options => options.UseOracle(connectionStringTest));
+builder.Services.AddDbContext<AppDBContext>(options => options.UseOracle(connectionStringTest));
 
 builder.Services.AddCors(options => {
     options.AddPolicy(name: "widthoutCors", policy =>
