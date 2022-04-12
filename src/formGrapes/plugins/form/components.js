@@ -58,17 +58,7 @@ export default function(editor, opt) {
         tagName: 'form',
         droppable: ':not(form)',
         draggable: ':not(form)',
-        attributes: { method: 'get', "data-save": true },
-        traits: [{
-          type: 'select',
-          name: 'method',
-          options: [
-            {value: 'get', name: 'GET'},
-            {value: 'post', name: 'POST'},
-          ],
-          }, {
-            name: 'action',
-          }],
+        attributes: { method: 'POST', action: "/saveData", "data-save": true }
       },
     },
 

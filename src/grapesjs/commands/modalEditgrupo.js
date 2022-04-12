@@ -6,6 +6,13 @@ export default (modal, opts) => {
     const {idEditing, btnTextContent} = opts;
 
     form.innerHTML = `
+        ${!idEditing ? `
+            <div class="mb-3">
+                <label for="crear_codigo-grupo_hist" class="form-label">Código</label>
+                <input type="text" class="form-control" name="CD_CODI_GRHI" id="crear_codigo-grupo_hist">
+            </div>
+        ` : ""}
+
         <div class="mb-3">
             <label for="crear_titulo-grupo_hist" class="form-label">Título</label>
             <input type="text" class="form-control" name="TX_TITULO_GRHI" id="crear_titulo-grupo_hist">

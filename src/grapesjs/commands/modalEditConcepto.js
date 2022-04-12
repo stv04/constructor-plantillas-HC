@@ -19,6 +19,13 @@ export default (modal, opts) => {
             </select>
         </div>
         
+        ${!idEditing ? `
+            <div class="mb-3">
+                <label for="crear_CODIGO-concepto_hist" class="form-label">Código</label>
+                <input type="text" class="form-control" name="CD_CODI_COHI" id="crear_CODIGO-concepto_hist">
+            </div>
+        ` : ""}
+        
         <div class="mb-3">
             <label for="crear_titulo-concepto_hist" class="form-label">Título</label>
             <input type="text" class="form-control" name="TX_TITULO_COHI" id="crear_titulo-concepto_hist">
