@@ -17,16 +17,17 @@ export default {
             "tX_JS_FORM": js
         }
 
-        console.log(html);
 
         console.log(JSON.parse(components));
-
-        if(viewErrorsBeforeSave(JSON.parse(components))) {
+        const errores = viewErrorsBeforeSave(JSON.parse(components));
+        if(errores) {
             return modal.open({
                 title: "Error en validación",
-                content: "Faltan llenar algunos elementos"
+                content: "Faltan llenar el nombre de un campo de tipo " + errores.type
             });
         }
+
+        // return;
 
         const opts = {
             btnTextContent: "Crear Nuevo formulario",

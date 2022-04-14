@@ -4,91 +4,103 @@ import { typeCol1, typeCol2, typeCol3, typeCol4, typeCol6, typeConcepto, typeGru
 export default (editor, opts) => {
     const comp = editor.DomComponents;
 
-    comp.addType(typeGrupo, {
-      isComponent: el => el.tagName == 'DIV',
-          
+    comp.addType(typeRow, {
+      isComponent: el => el.tagName == 'DIV' && el.classList.contains("row"),
+         
       model: {
         defaults: {
           draggable: "*",
-          droppable: "*",
           tagName: 'div',
-          attributes: { style: "position: absolute;", class: "grupo" },
-          style: {
-            height: "66px",
-            width: "600px"
-          },
-          traits: [{
-            name: "grupoHist",
-            label: "Datos",
-            type: "grupos-options"
-          }, {
-            type: 'button',
-            label: "Actualizar",
-            text: 'Modificar',
-            full: true, // Full width button
-            command: "editar-grupo_hist"
-          }, {
-            type: 'button',
-            label: "Crear",
-            text: 'Nuevo',
-            full: true, // Full width button
-            command: "crear-grupo_hist"
-          }]
+          attributes: { class:"row p-2" }
         }
       }
     });
 
-    comp.addType(typeConcepto, {
-      isComponent: el => el.tagName == 'DIV',
+    // comp.addType(typeGrupo, {
+    //   isComponent: el => el.tagName == 'DIV',
           
-      model: {
-        defaults: {
-          draggable: ".grupo",
-          droppable: false,
-          tagName: 'div',
-          attributes: { style: "position: absolute;" },
-          traits: [{
-            name: "conceptoHist",
-            label: "Datos",
-            type: "conceptos-options"
-          }, {
-            type: 'button',
-            label: "Actualizar",
-            text: 'Modificar',
-            full: true, // Full width button
-            command: "editar-concepto_hist"
-          }, {
-            type: 'button',
-            label: "Crear",
-            text: 'Nuevo',
-            full: true, // Full width button
-            command: "crear-concepto_hist"
-          }]
-        }
-      }
-    });
+    //   model: {
+    //     defaults: {
+    //       draggable: "*",
+    //       droppable: "*",
+    //       tagName: 'div',
+    //       attributes: { style: "position: absolute;", class: "grupo" },
+    //       style: {
+    //         height: "66px",
+    //         width: "600px"
+    //       },
+    //       traits: [{
+    //         name: "grupoHist",
+    //         label: "Datos",
+    //         type: "grupos-options"
+    //       }, {
+    //         type: 'button',
+    //         label: "Actualizar",
+    //         text: 'Modificar',
+    //         full: true, // Full width button
+    //         command: "editar-grupo_hist"
+    //       }, {
+    //         type: 'button',
+    //         label: "Crear",
+    //         text: 'Nuevo',
+    //         full: true, // Full width button
+    //         command: "crear-grupo_hist"
+    //       }]
+    //     }
+    //   }
+    // });
 
-    comp.addType(typeRotulo, {
-      isComponent: el => {
-        return el.tagName === "H6"
-      },
+    // comp.addType(typeConcepto, {
+    //   isComponent: el => el.tagName == 'DIV',
+          
+    //   model: {
+    //     defaults: {
+    //       draggable: ".grupo",
+    //       droppable: false,
+    //       tagName: 'div',
+    //       attributes: { style: "position: absolute;" },
+    //       traits: [{
+    //         name: "conceptoHist",
+    //         label: "Datos",
+    //         type: "conceptos-options"
+    //       }, {
+    //         type: 'button',
+    //         label: "Actualizar",
+    //         text: 'Modificar',
+    //         full: true, // Full width button
+    //         command: "editar-concepto_hist"
+    //       }, {
+    //         type: 'button',
+    //         label: "Crear",
+    //         text: 'Nuevo',
+    //         full: true, // Full width button
+    //         command: "crear-concepto_hist"
+    //       }]
+    //     }
+    //   }
+    // });
 
-      model: {
-        defaults: {
-          draggable: false,
-          droppable: false,
-          removable: false,
-          copyable: false,
-          tagName: "h6",
-          content: "Seleccione grupo",
-          stylable: [
-            "background-color",
-            "text-align", "color", "font-size", "display",
-            "font-weight"
-          ]
-        }
-      }
-    })   
+    // comp.addType(typeRotulo, {
+    //   isComponent: el => {
+    //     return el.tagName === "H6"
+    //   },
+
+    //   model: {
+    //     defaults: {
+    //       draggable: false,
+    //       droppable: false,
+    //       removable: false,
+    //       copyable: false,
+    //       tagName: "h6",
+    //       content: "Seleccione grupo",
+    //       stylable: [
+    //         "background-color",
+    //         "text-align", "color", "font-size", "display",
+    //         "font-weight"
+    //       ]
+    //     }
+    //   }
+    // })   
 
     comp.addType("odontograma", {
       model: {

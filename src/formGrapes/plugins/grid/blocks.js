@@ -11,35 +11,14 @@ export default (editor, opts) => {
     }
 
     // 1 column
-    bm.add(typeGrupo, {
-        label: "GRUPOS",
+    bm.add(typeCol1, {
+        label: "1 columna",
         attributes: {class:'gjs-fonts gjs-f-b1'},
         content: {
-            type: typeGrupo,
+            type: typeRow,
             components: [
-                {type: typeRotulo},
-                {
-                    type: typeConcepto,
-                    components: [
-                        {type: typeRotulo, content: "Seleccione concepto"},
-                        {type: typeInput}
-                    ],
-                    isImportant: true
-                }
-            ],
-            isImportant: true,
-        },
-        category
-    });
-
-    bm.add(typeConcepto, {
-        label: "CONCEPTO",
-        attributes: {class:'gjs-fonts gjs-f-b1'},
-        content: {
-            type: typeConcepto,
-            components: [
-                {type: typeRotulo, content: "Seleccione concepto"},
-                {type: typeInput}
+                styleMinHeight,
+                '<div class="min-h col-12"></div>',
             ],
             isImportant: true,
         },

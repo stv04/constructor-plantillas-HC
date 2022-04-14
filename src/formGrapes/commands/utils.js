@@ -6,7 +6,7 @@ export const viewErrorsBeforeSave = (arrComponent) => {
         const component = Object.assign({}, comp.attributes);
         component.type = comp.type;
         
-        if (comp.isImportant && !component.name) return true;
+        if (component["data-strict"] && !component.name) return component;
         
         if(comp.components) {
           res = viewErrorsBeforeSave(comp.components);

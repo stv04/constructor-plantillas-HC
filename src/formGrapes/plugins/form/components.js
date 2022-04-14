@@ -58,7 +58,7 @@ export default function(editor, opt) {
         tagName: 'form',
         droppable: ':not(form)',
         draggable: ':not(form)',
-        attributes: { method: 'POST', action: "/saveData", "data-save": true }
+        attributes: { method: 'POST', action: "/saveData" }
       },
     },
 
@@ -81,7 +81,7 @@ export default function(editor, opt) {
         highlightable: false,
         attributes: { 
           type: 'text',
-          "data-save": true
+          "data-strict": true
         },
         traits: [
           nameTrait,
@@ -121,7 +121,7 @@ export default function(editor, opt) {
     model: {
       defaults: {
         tagName: 'textarea',
-        attributes: { "data-save": true },
+        attributes: { "data-strict": true },
         traits: [
           nameTrait,
           placeholderTrait,
@@ -139,7 +139,7 @@ export default function(editor, opt) {
 
     model: {
       defaults: {
-        attributes: {"data-save": true},
+        // attributes: {"data-strict": true},
         tagName: 'option',
         layerable: false,
         droppable: false,
@@ -159,7 +159,7 @@ export default function(editor, opt) {
     model: {
       defaults: {
         tagName: 'select',
-        attributes: {"data-save": true},
+        attributes: {"data-strict": true},
         components: [
         createOption('opt1', 'Option 1'),
         createOption('opt2', 'Option 2'),
@@ -191,7 +191,7 @@ export default function(editor, opt) {
     model: {
       defaults: {
         copyable: false,
-        attributes: { type: 'checkbox', "data-save": true },
+        attributes: { type: 'checkbox', "data-strict": true },
         traits: [
           idTrait,
           nameTrait,
@@ -224,7 +224,7 @@ export default function(editor, opt) {
 
     model: {
       defaults: {
-        attributes: { type: 'radio', "data-save": true },
+        attributes: { type: 'radio', "data-strict": true },
       },
     },
   });
@@ -236,7 +236,7 @@ export default function(editor, opt) {
     model: {
       defaults: {
         tagName: 'button',
-        attributes: { type: 'button', "data-save": true },
+        attributes: { type: 'button' },
         text: 'Send',
         traits: [
           {

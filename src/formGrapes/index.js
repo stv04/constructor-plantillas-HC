@@ -21,7 +21,7 @@ globalThis.editor = grapesjs.init({
   width: 'auto',
   // Disable the storage manager for the moment
   storageManager: false,
-  plugins: ["formPlugin"],
+  plugins: ["formPlugin", "basicPlugin"],
   pluginsOpts: {
     'gjs-preset-webpage': {
         exportOpts: false,
