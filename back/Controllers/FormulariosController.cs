@@ -21,13 +21,19 @@ public class FormulariosController : ControllerBase
     //INTERACIÓN CON LA PLANTILLA
     [HttpGet]
     public async Task<IActionResult> Get(int? id)
-    {
+    {   
         try {
             if(id != null) {
                 var x = await context.FORMULARIOS.FirstOrDefaultAsync(f => f.NU_IDFORMULARIO_FORM == id);
                 return Ok(x);
             } else {
-                var x = await context.FORMULARIOS.OrderByDescending(f => f.NU_IDFORMULARIO_FORM).ToListAsync();
+                var x = from Y in context.FORMULARIOS
+                    orderby Y.NU_IDFORMULARIO_FORM descending
+                    select new {
+                        NU_IDFORMULARIO_FORM = Y.NU_IDFORMULARIO_FORM,
+                        TX_NOMBREFORMULARIO_FORM = Y.TX_NOMBREFORMULARIO_FORM
+                    };
+                
                 return Ok(x);
             }
         } catch {

@@ -1,3 +1,4 @@
+import camposCalculados from "../../scripts/camposCalculados.js";
 import cargaDinamicaDatosMaestros from "../../scripts/cargaDinamicaDatosMaestros.js";
 import { typeOption } from "../../types/formTypes.js";
 
@@ -278,6 +279,30 @@ export default function (editor) {
             return el;
         },
 
-    })
+    });
     
+    
+    trm.addType("campos-calc", {
+        events: {
+            keyup: "onChange"
+        },
+
+        onValueChange() {
+            const { model, target } = this;
+            const valueConfig = model.get('value').trim();
+            console.log(this, target, valueConfig)
+
+            target.attributes.dependence = valueConfig;
+            target.attributes["script-props"] = ["dependence"];
+
+            target.attributes.script = camposCalculados;
+        },
+
+        getInputEl() {
+            if (!this.$input) {
+                this.$input = document.createElement('textarea');
+            }
+            return this.$input;
+        }
+    })
 }

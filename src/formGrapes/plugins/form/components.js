@@ -58,7 +58,7 @@ export default function(editor, opt) {
         tagName: 'form',
         droppable: ':not(form)',
         draggable: ':not(form)',
-        attributes: { method: 'POST', action: "/saveData" }
+        attributes: { method: 'POST', action: "/saveData", style: "min-height: 60px" }
       },
     },
 
@@ -81,7 +81,8 @@ export default function(editor, opt) {
         highlightable: false,
         attributes: { 
           type: 'text',
-          "data-strict": true
+          "data-strict": true,
+          class: "form-control"
         },
         traits: [
           nameTrait,
@@ -121,7 +122,7 @@ export default function(editor, opt) {
     model: {
       defaults: {
         tagName: 'textarea',
-        attributes: { "data-strict": true },
+        attributes: { "data-strict": true, class:"form-control" },
         traits: [
           nameTrait,
           placeholderTrait,
@@ -159,7 +160,7 @@ export default function(editor, opt) {
     model: {
       defaults: {
         tagName: 'select',
-        attributes: {"data-strict": true},
+        attributes: {"data-strict": true, class: "form-select"},
         components: [
         createOption('opt1', 'Option 1'),
         createOption('opt2', 'Option 2'),
@@ -168,9 +169,9 @@ export default function(editor, opt) {
           nameTrait,
           requiredTrait,
           {
-            name: "dataMaster",
+            name: "options",
             label: "Datos",
-            type: "dataMaster-options"
+            type: "select-options"
           },
         ],
       },
@@ -191,7 +192,7 @@ export default function(editor, opt) {
     model: {
       defaults: {
         copyable: false,
-        attributes: { type: 'checkbox', "data-strict": true },
+        attributes: { type: 'checkbox', "data-strict": true, class:"form-check" },
         traits: [
           idTrait,
           nameTrait,
@@ -224,7 +225,7 @@ export default function(editor, opt) {
 
     model: {
       defaults: {
-        attributes: { type: 'radio', "data-strict": true },
+        attributes: { type: 'radio', "data-strict": true, class:"form-check" },
       },
     },
   });
@@ -284,6 +285,7 @@ export default function(editor, opt) {
       defaults: {
         tagName: 'label',
         label: "Etiqueta",
+        attributes: {class:"form-label"},
         components: 'Contenido',
         traits: [forTrait],
       },

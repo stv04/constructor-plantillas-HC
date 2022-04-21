@@ -10,6 +10,16 @@ export default (editor, opts) => {
         label: "Complementos"
     }
 
+    // titulo
+    bm.add("title", {
+        label: "Título",
+        content: {
+            type: "tittle",
+            content: "Ingrese título",
+        },
+        category
+    });
+
     // 1 column
     bm.add(typeCol1, {
         label: "1 columna",

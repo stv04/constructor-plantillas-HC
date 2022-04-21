@@ -2,6 +2,8 @@ import { endPoint } from "./config.js";
 
 class Formulario {
     createFormulario(body) {
+        console.log(body);
+        console.log(JSON.parse(body));
         fetch(endPoint, {
             method: "POST",
             headers: {
