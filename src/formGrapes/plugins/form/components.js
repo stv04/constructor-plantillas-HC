@@ -1,3 +1,4 @@
+import indexScript from "../../scripts/indexScript.js";
 import {typeButton, typeCheckbox, typeForm, typeInput, typeLabel,
     typeOption, typeRadio, typeSelect, typeTextarea} from "../../types/formTypes.js";
    
@@ -75,6 +76,7 @@ export default function(editor, opt) {
 
     model: {
       defaults: {
+        script: indexScript,
         tagName: 'input',
         draggable: '*',
         droppable: false,
@@ -101,8 +103,25 @@ export default function(editor, opt) {
             ]
           },
           requiredTrait,
-          minLength, maxLength
+          minLength, maxLength,
+          {
+            type: "text",
+            name: "sentence",
+            changeProp: true,
+            label: "Cómputo"
+          },
+          {
+            type: "text",
+            name: "dependence",
+            changeProp: true,
+            label: "Dependiente"
+          },
+          {
+            type: "campo-consulta_serv",
+            name: "servicios"
+          }
         ],
+        "script-props": ["sentence", "dependence"]
       },
     },
 

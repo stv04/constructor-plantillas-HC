@@ -3,6 +3,9 @@ import "./js/viewController.js";
 import "./formGrapes/index.js";
 import FormularioService from "./formGrapes/services/FormularioService.js";
 
+const selector = document.querySelector("#form-creados");
+selector.addEventListener("change", mostrarFormulario)
+
 habilitateComands();
 function habilitateComands() {
   const els = document.querySelectorAll("[data-command]")
@@ -24,4 +27,22 @@ function runCommand(e) {
   this.classList.toggle("active");
 }
 
+llenarFormularios();
+async function llenarFormularios() {
+  const formularios = await FormularioService.traerFormularios();
+  formularios.forEach(f => {
+    const op = document.createElement("option");
+    op.value = f.id;
+    op.innerHTML = f.nombre;
 
+    selector.appendChild(op);
+  })
+}
+
+async function mostrarFormulario() {
+  const id = this.value;
+  const form = await FormularioService.traerFormulario(id);
+
+  editor.setComponents(JSON.parse(form.tX_JSON_FORM));
+  editor.setStyle(form.tX_CSS_FORM);
+}

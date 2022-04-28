@@ -1,51 +1,78 @@
+import campoDependiente from "../../scripts/campoDependiente.js";
 import camposCalculados from "../../scripts/camposCalculados.js";
 import cargaDinamicaDatosMaestros from "../../scripts/cargaDinamicaDatosMaestros.js";
 import { typeOption } from "../../types/formTypes.js";
 
-const datos = [
-    {
-        iddatomaestro: 1,
-        titulodato: "departamentos",
-        dato: '["Boyacá", "cundinamarca", "Quindio"]',
-        idrelacion: 1,
-        relacion: null
-    },
-    {
-        iddatomaestro: 2,
-        titulodato: "dedicacion",
-        dato: '["Tiempo completo", "Medio tiempo", "Catedra"]',
-        idrelacion: 2,
-        relacion: null
-    },
-    {
-        iddatomaestro: 3,
-        titulodato: "ciudadesboyaca",
-        dato: '["Motavita", "Tunja", "Sesquilé"]',
-        idrelacion: 1,
-        relacion: 0
-    },
-    {
-        iddatomaestro: 4,
-        titulodato: "ciudadescundinamarca",
-        dato: '["Chila", "Zupaquira", "Cota"]',
-        idrelacion: 1,
-        relacion: 1
-    },
-    {
-        iddatomaestro: 5,
-        titulodato: "ciudadesquindio",
-        dato: '["Armenia", "Zalento"]',
-        idrelacion: 1,
-        relacion: 3
-    },
-    {
-        iddatomaestro: 4,
-        titulodato: "ciudadesboyaca2",
-        dato: '["Ciudad2", "Ciudad3"]',
-        idrelacion: 1,
-        relacion: 1
-    },
-]
+const camposAfil = [{
+    nombre: 'Nombre',
+    campos: [{titulo: "tX_PRIMNOMBRE_AFIL"}],
+}, {
+    nombre: "Apellido",
+    campos: [{titulo: "tX_PRIMAPELLI_AFIL"}],
+}, {
+    nombre: "Tipo doc.",
+    campos: [
+        {titulo: "nU_IDTIPOIDEN_TIPOIDEN", conversion: "TIPO-DE-IDENTIFICACION"}
+    ],
+}, {
+    nombre: "Nombre completo",
+    campos: [{titulo: "tX_PRIMNOMBRE_AFIL"}, {titulo: "tX_PRIMAPELLI_AFIL"}],
+    separador: " "
+}, {
+    nombre: "Número identificación",
+    campos: [{titulo: "tX_IDENTIFICACION_AFIL"}],
+}, {
+    nombre: "Regimen",
+    campos: [
+        {titulo: "nU_IDREGIMEN_REGIMEN", conversion: "REGIMEN"}
+    ],
+}, {
+    nombre: "Estado civil",
+    campos: [
+        {titulo: "nU_ESTADO_AFIL", conversion: "ESTADO CIVIL"}
+    ],
+}, {
+    nombre: "Edad",
+    campos: [
+        {titulo: "fE_FECHANACIMIENTO_AFIL"}
+    ],
+    eval: "edad"
+}, {
+    nombre: "Sexo",
+    campos: [
+        {titulo: "nU_IDGENERO_GENEROS", conversion: "SEXO"}
+    ],
+}, {
+    nombre: "Hemoclasificación",
+    campos: [
+        {titulo: "nU_IDTIPOSANGRE_TIPOSANGRE", conversion: "TIPOS-DE-SANGRE"},
+        {titulo: "nU_IDRH_RHS", conversion: "RH"}
+    ],
+}, {
+    nombre: "Dirección",
+    campos: [
+        {titulo: "tX_DIRECCION_AFIL"}
+    ],
+}, {
+    nombre: "Telefono",
+    campos: [
+        {titulo: "nU_TELEFONO_AFIL"}
+    ],
+}, {
+    nombre: "Celular",
+    campos: [
+        {titulo: "nU_CELULAR_AFIL"}
+    ],
+}, {
+    nombre: "Tipo de usuario",
+    campos: [
+        {titulo: "nU_IDAFILIADO_AFIL"},
+        {titulo: "nU_IDCOTIZANTE_AFIL"},
+    ],
+    eval: "tipo-usuario", 
+    separador: ","
+}]
+
 let tituloMaestros;
 const ConsultaDatosMaestros = async (id) => {
     let consulta = "maestros"
@@ -63,7 +90,7 @@ const ConsultaDatosMaestros = async (id) => {
     return maestros;
 }
 
-cargarTitulosMaestros();
+// cargarTitulosMaestros();
 async function cargarTitulosMaestros() {
     tituloMaestros = await ConsultaDatosMaestros()
     .then(d => d.filter(m => m.relacion === null).map(m => {
@@ -290,12 +317,19 @@ export default function (editor) {
         onValueChange() {
             const { model, target } = this;
             const valueConfig = model.get('value').trim();
+            const el = target.view.el;
+            el.setAttribute("data-computo", valueConfig);
+
+            if(valueConfig)
+            el.setAttribute("disabled", true);
+
             console.log(this, target, valueConfig)
 
-            target.attributes.dependence = valueConfig;
-            target.attributes["script-props"] = ["dependence"];
+            target.attributes.sentence = valueConfig;
+            target.attributes["script-props"] = ["sentence"];
 
             target.attributes.script = camposCalculados;
+            camposCalculados.bind(el)({sentence: valueConfig});
         },
 
         getInputEl() {
@@ -303,6 +337,103 @@ export default function (editor) {
                 this.$input = document.createElement('textarea');
             }
             return this.$input;
+        }
+    });
+    
+    trm.addType("campo-dependiente", {
+        events: {
+            keyup: "onChange"
+        },
+
+        onValueChange() {
+            const { model, target } = this;
+            const valueConfig = model.get('value').trim();
+            const el = target.view.el;
+            el.setAttribute("data-dependiente", valueConfig);
+            console.log(target.attributes);
+
+            target.attributes.dependence = valueConfig;
+            target.attributes["script-props"] = ["dependence"];
+
+            target.attributes.script = campoDependiente;
+        },
+
+        getInputEl() {
+            if (!this.$input) {
+                this.$input = document.createElement('input');
+            }
+            return this.$input;
+        }
+    });
+
+    trm.addType("campo-consulta_serv", {
+        noLabel: true,
+        templateInput: "",
+        templateInput: `<div class="custom-input-wrapper">
+        Administrador de opciones
+        <div data-input></div>
+        </div>`,
+        events: {
+            keyup: "onChange"
+        },
+
+        onEvent({elInput, component, event}) {
+            /* Opciones
+                *elInput: Elemento mostrado en el el rasgo,
+                *component: el componente del inpt para realizarle los cambios en el canvas/html
+                *event: Donde se puede encontrar el input que cambió
+            */
+
+            const servSelector = elInput.querySelector("#servicios-selector");
+            const campoSelector = elInput.querySelector("#servicios-campos");
+
+            if(!servSelector.value) {
+                return delete component.attributes.attributes["data-servicio"];
+            }
+
+            if(servSelector.value === "afiliados" && event.target.id === "servicios-selector") {
+                campoSelector.innerHTML = "";
+                console.log(campoSelector)
+                camposAfil.forEach(campo => {
+                    const option = document.createElement("option");
+                    option.setAttribute("class", "bg-dark text-light");
+                    const objString = JSON.stringify(campo);
+                    option.value = objString;
+                    option.innerHTML = campo.nombre;
+
+                    campoSelector.appendChild(option);
+                });
+            }
+
+        
+            const servicio = servSelector.value + "::" + campoSelector.value;
+            console.log(component);
+
+            component.attributes.attributes["data-servicio"] = servicio;
+        },
+
+        createInput({trait}) {
+            const servicios = [{
+                value: "",
+                name: "Seleccione"
+            }, {
+                value: "afiliados",
+                name: "Afiliados"
+            }]
+
+            const el = document.createElement("div");
+
+            el.innerHTML = `
+                <select id="servicios-selector" class="form-select mb-3 form-select-sm bg-transparent text-light">
+                    ${servicios.map(opt => `<option class="bg-dark text-light" value="${opt.value}">${opt.name}</option>`).join("")}
+                </select>
+
+                <label class="form-label" for="servicios-campos">Campo del servicio</label>
+                <select id="servicios-campos" class="form-select form-select-sm bg-transparent text-light mb-3">
+                </select>
+            `;
+
+            return el;
         }
     })
 }
