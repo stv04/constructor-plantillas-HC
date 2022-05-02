@@ -26,4 +26,19 @@ namespace back.models
         public int? NU_IDFORMULARIO_FORM {get; set;}
         public string TX_NOMBREFORMULARIO_FORM {get; set;}
     }
+
+    public class FomularioPorDocumento {
+        [Key]
+        public int? NU_IDFORMXDOCUMENTO_FORMXDOC {get; set;}
+        public int NU_IDFORMULARIO_FORMXDOC {get; set;}
+        public int NU_IDDOCUMENTO_FORMXDOC {get; set;}
+    }
+
+    public class DocumentoExterno {
+        [Key]
+        public int? NU_IDDOCEXT_DOCEXT {get; set;}
+        public string TX_NOMBREDOC_DOCEXT {get; set;}
+        public int NU_TIPODOC_DOCEXT {get; set;}
+        public string TX_DATOSARELACIONAR_DOCEXT {get; set;}
+    }
 }
