@@ -10,8 +10,8 @@ namespace back.context
 
         public DbSet<Formulario> FORMULARIOS {get; set;}
         public DbSet<HistoriaClinica> HISTORIA_CLINICA { get; set; }
-        public DbSet<FomularioPorDocumento> FORMULARIO_X_DOCUMENTO {get; set;}
-        public DbSet<DocumentoExterno> DOCUMENTO_EXTERNO {get; set;}
+        public DbSet<DocumentosPorFormulario> DOCUMENTOS_X_FORMULARIO {get; set;}
+        public DbSet<DocumentoExterno> DOCUMENTOS_EXTERNOS {get; set;}
 
     }
 }

@@ -51,21 +51,20 @@ public class FormulariosController : ControllerBase
             await context.FORMULARIOS.AddAsync(formulario);
             await context.SaveChangesAsync();
 
-            return Ok("Formulario agregado");
+            return Ok(formulario);
         } catch {
             return BadRequest("Directo al catch");
         }
     }
 
-    [HttpGet("documentoExterno")]
+    [HttpGet("documentosExternos")]
     public async Task<IActionResult> GetDocumentosExternos(int? id) {
         try {
             if(id != null) {
-                var x = await context.DOCUMENTO_EXTERNO.FirstOrDefaultAsync(f => f.NU_IDDOCEXT_DOCEXT == id);
+                var x = await context.DOCUMENTOS_EXTERNOS.FirstOrDefaultAsync(f => f.NU_IDDOCEXT_DOCEXT == id);
                 return Ok(x);
             } else {
-                var x = from Y in context.DOCUMENTO_EXTERNO
-                    orderby Y.NU_IDDOCEXT_DOCEXT descending
+                var x = from Y in context.DOCUMENTOS_EXTERNOS
                     select new {
                         NU_IDDOCEXT_DOCEXT = Y.NU_IDDOCEXT_DOCEXT,
                         TX_NOMBREDOC_DOCEXT = Y.TX_NOMBREDOC_DOCEXT
@@ -78,15 +77,15 @@ public class FormulariosController : ControllerBase
         }
     }
 
-    [HttpPost("documentoExterno")]
+    [HttpPost("documentosExternos")]
     public async Task<IActionResult> CrearDocumentoExterno([FromBody] DocumentoExterno nuevoDoc) 
     {
         try {
-            int? lastId = await context.DOCUMENTO_EXTERNO.MaxAsync(f => f.NU_IDDOCEXT_DOCEXT);
+            int? lastId = await context.DOCUMENTOS_EXTERNOS.MaxAsync(f => f.NU_IDDOCEXT_DOCEXT);
             int? id = lastId != null ? lastId + 1 : 1;
             nuevoDoc.NU_IDDOCEXT_DOCEXT = id;
 
-            await context.DOCUMENTO_EXTERNO.AddAsync(nuevoDoc);
+            await context.DOCUMENTOS_EXTERNOS.AddAsync(nuevoDoc);
             await context.SaveChangesAsync();
 
 
@@ -97,20 +96,30 @@ public class FormulariosController : ControllerBase
     }
 
     [HttpGet("relacionDocumento")]
-    public async Task<IActionResult> GetRelacionDocumento()
+    public async Task<IActionResult> GetRelacionDocumento(int id)
     {
-        return Ok("mi string");
+        try {
+            if(id == null) return BadRequest("Es necesario el id del formulario que estás consultando.");
+            
+            var x = from Y in context.DOCUMENTOS_X_FORMULARIO
+                where Y.NU_IDFORMULARIO_FORMXDOC == id
+                select Y;
+
+            return Ok(x);
+        } catch {
+            return BadRequest("lo siento, no hay nada :'(");
+        }
     }
 
     [HttpPost("relacionarDocumento")]
-    public async Task<IActionResult> RelacionarDocumento([FromBody] FomularioPorDocumento relacion) 
+    public async Task<IActionResult> RelacionarDocumento([FromBody] DocumentosPorFormulario relacion) 
     {
         try {
-            int? lastId = await context.FORMULARIO_X_DOCUMENTO.MaxAsync(f => f.NU_IDFORMXDOCUMENTO_FORMXDOC);
+            int? lastId = await context.DOCUMENTOS_X_FORMULARIO.MaxAsync(f => f.NU_IDFORMXDOCUMENTO_FORMXDOC);
             int? id = lastId != null ? lastId + 1 : 1;
             relacion.NU_IDFORMXDOCUMENTO_FORMXDOC = id;
 
-            await context.FORMULARIO_X_DOCUMENTO.AddAsync(relacion);
+            await context.DOCUMENTOS_X_FORMULARIO.AddAsync(relacion);
             await context.SaveChangesAsync();
 
 

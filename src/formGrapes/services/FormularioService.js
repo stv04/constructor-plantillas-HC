@@ -1,10 +1,10 @@
 import { endPoint } from "./config.js";
 
 class Formulario {
-    createFormulario(body) {
+    async createFormulario(body) {
         console.log(body);
         console.log(JSON.parse(body));
-        fetch(endPoint, {
+        return await fetch(endPoint, {
             method: "POST",
             headers: {
                 "Content-Type": "Application/json"
@@ -14,8 +14,9 @@ class Formulario {
             if(!res.ok) {
                 return res.text();
             }
+
+            return res.json();
         })
-        .then(d => console.log(d))
         .catch(e => console.log(e));
     }
 
@@ -34,7 +35,21 @@ class Formulario {
         });
     }
 
-    
+    async obtenerDocumentosExternos() {
+        const documentos = await fetch(endPoint + "/documentosExternos").then(d => d.json());
+
+        return documentos;
+    }
+
+    async asociarDocumentosExternos(documentos) {
+        for await (let doc of documentos) {
+            await fetch(endPoint + "/relacionarDocumento", {
+                method: "post",
+                body: JSON.stringify(doc),
+                headers: {"Content-Type": "Application/json"}
+            });
+        }
+    }
 }
 
 export default new Formulario();

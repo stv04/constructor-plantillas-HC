@@ -1,3 +1,4 @@
+import { asociarDocumentoConFormulario } from "../../js/documentos.js";
 import FormularioService from "../services/FormularioService.js";
 
 export default (modal, opts) => {
@@ -21,7 +22,11 @@ export default (modal, opts) => {
         sendingData["TX_NOMBREFORMULARIO_FORM"] = nombreForm;
 
         
-        const formularioCreado = FormularioService.createFormulario(JSON.stringify(sendingData));
+        const formularioCreado = await FormularioService.createFormulario(JSON.stringify(sendingData));
+        console.log(formularioCreado);
+
+        const documentos = asociarDocumentoConFormulario(formularioCreado.nU_IDFORMULARIO_FORM);
+        await FormularioService.asociarDocumentosExternos(documentos);
 
         modal.close();
         

@@ -27,7 +27,7 @@ namespace back.models
         public string TX_NOMBREFORMULARIO_FORM {get; set;}
     }
 
-    public class FomularioPorDocumento {
+    public class DocumentosPorFormulario {
         [Key]
         public int? NU_IDFORMXDOCUMENTO_FORMXDOC {get; set;}
         public int NU_IDFORMULARIO_FORMXDOC {get; set;}

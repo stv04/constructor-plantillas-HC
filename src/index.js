@@ -2,7 +2,9 @@ import "./js/viewController.js";
 // import "./grapesjs/index.js";
 import "./formGrapes/index.js";
 import FormularioService from "./formGrapes/services/FormularioService.js";
+import cargarDocumentosExternos from "./js/documentos.js";
 
+cargarDocumentosExternos();
 const selector = document.querySelector("#form-creados");
 selector.addEventListener("change", mostrarFormulario)
 

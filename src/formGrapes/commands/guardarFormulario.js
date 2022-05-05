@@ -34,7 +34,7 @@ export default {
             sendingData
         }
         modal.open({
-            title: "Creando nuevo concepto",
+            title: "Creando nuevo formulario",
         });
 
         modal.setContent(modalNombreForm(modal, opts))
