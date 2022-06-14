@@ -45,8 +45,54 @@ class ConceptoHist {
         const concepto = component.concepto;
         const backgroundColor = styles["background-color"];
         const plantilla = PlantillaHistService.idPlantillaHist;
+        const dependiente = component.dependiente;
+
+        let {height, width} = styles || {};
+        const { top, left } = styles || {};
+
+        const innerComponent = component.innerComponent;
+        let NU_PATH_FILE = "";
+        if(innerComponent) {
+            switch(innerComponent.tipoEspecial) {
+                case "formula":
+                    const dataFormula = innerComponent["data-formula"];
+                    NU_PATH_FILE = `SELECT CAST((${dataFormula}) AS NUMBER(18,2)) FROM DUAL`;
+                break;
+
+                case "grafica":
+                    const path = innerComponent.src.replace("/Images/ImagenesPub/", "file:\\");
+                    const innerStyle = innerComponent.style;
+
+                    if(innerStyle) {
+                        height = innerStyle.height;
+                        width = innerStyle.width;
+                    }
+                    NU_PATH_FILE = path;
+                break;
+
+                case "typeSelect":
+                    const query = innerComponent["data-query"];
+                    NU_PATH_FILE = `SELECT ID_AUTO_OPCIO, TX_DESC_OPCI FROM LISTA_OPCION WHERE TX_GRUP_OPCI = '${query}'`
+                break;
+                
+                case "typelistaOption":
+                    const relacion = innerComponent["data-query"];
+                    await this.actualizarConceptoTipoLista(component.idConceptoDB, relacion);
+                break;
+            }
+
+        }
+
+        let NU_INDIDEP_RPC = -1;
+        if(dependiente) {
+            NU_INDIDEP_RPC = dependiente.sort;
+        }
+
+
+        if(component.type === "table" && component.celdasTabla) {
+            this.crearCeldasTabla(component.celdasTabla, plantilla, component.idGrupoParentDB, component.idConceptoDB);
+        }
       
-        const { top, left, height, width } = styles || {};
       
         let [
           TX_HXCOLORROTULO_RPC, TX_HXCOLORLETRA_RPC, NU_ROTULOTOTALANCHO_RPC, 
@@ -67,9 +113,9 @@ class ConceptoHist {
           "NU_LEFT_RPC": initialLeft, // height
           "NU_HEIGHT_RPC": convert_px_to_tw(height) || 300, // height
           "NU_WIDTH_RPC": convert_px_to_tw(width) || 1000, // width
-          "NU_PATH_FILE": "sirve para fórmulas", // formulas de consulta / path
+          NU_PATH_FILE, //"sirve para fórmulas", formulas de consulta / path
           "NU_VISIBLE_RPC": 1, //"visibilidad del concepto:bool",
-          "NU_INDIDEP_RPC": -1, // concepto de dependencia option de select
+          NU_INDIDEP_RPC, // concepto de dependencia option de select
           TX_HXCOLORLETRA_RPC, //: "Color del título del concepto",
           NU_ROTULOTOTALANCHO_RPC, //: "si el rotulo ocupará el ancho del concepto",
           NU_ALINEAROTULO_RPC, //: "alineación delrótulo",
@@ -105,6 +151,7 @@ class ConceptoHist {
 
         console.log("Enviando concepto => ", toSend)
 
+        return;
         const resp = await fetch(endPoint + "/createRelConcepto", {
             method: "POST",
             headers: {
@@ -112,6 +159,8 @@ class ConceptoHist {
             },
             body: JSON.stringify(toSend)
         }).then(d => d.json());
+
+        this.agregarValidaciones(component, resp.NU_NUME_RPC);
         return resp;
     }
 
@@ -130,6 +179,82 @@ class ConceptoHist {
         return conceptoCreado;
     }
 
+    async crearCeldasTabla(celdas, idPlantilla, idGrupoParentDB, idConceptoDB) {
+        for (const celda of celdas) {
+            const tipo = parseInt(celda["data-tipo"]);
+            const formato = {
+                R_GRID_HICLI: 0, // El id de la tabla
+                NU_NUME_PLHI_G: idPlantilla, // El id de la plantilla que está asociado
+                NU_GRID_COL: celda.gridCol, // Orden de columna
+                NU_GRID_ROW: celda.gridRow, // Orden de fila
+                NU_GRID_VAL: celda.content || celda.value || " ", // Contenido por defecto de la celda
+                NU_NUME_COHI_G: idConceptoDB, // Código del concepto tipo tabla
+                NU_NUME_GRHI_GRID: idGrupoParentDB, // Código del grupo asociado
+                NU_TIPO_RGP: isNaN(tipo) ? 6 : tipo, // Tipo de celda de la tabla
+                NU_VALIDAFILA_RGP: 0, // Se deja por defecto
+                NU_LOG_RGP: 20, // Cantidad de caráteres permitidos
+            }
+
+            console.log("Celda de tabla => ", formato);
+
+            const resp = await fetch(endPoint + "/createRelConcepto", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "Application/json"
+                },
+                body: JSON.stringify(formato)
+            }).then(d => d.json());
+        }
+    }
+ 
+    agregarValidaciones(component, idRelacion) {
+        const getData = title => component["data-"+title]
+
+        //Todos los balores booleanos reprentan un número 0,1 => false,true
+        const validaciones = {
+            PathValcon1: {
+                NU_NUME_COHI_VAHI1: component.idConceptoDB, // Código del concepto
+                NU_NUME_PLHI_VAHI1: idRelacion, // Código de la relación del concepto
+                NU_APLI_VAHI1: getData("genero") || 0, // Género 0,1,2 => ambos,masc,fem
+                NU_OBLI_VAHI1: getData("required") ? 1 : 0, // bool:si el concepto es obligatorio 
+                NU_EPIC_VAHI1: getData("es_epicrisis") ? 1 : 0, // bool:Si hace parte de epicrisis
+                NU_ANTE_VAHI1: getData("antecedentes") ? 1: 0, // bool:Si el concepto tendrá antecedentes
+                NU_DECI_VAHI1: getData("decimales") ? 1 : 0, // bool:Si el concepto contará con decimales
+                DE_TEMIN_VAHI1: getData("edad_min") || null, // Edad mínima del paciente para habilitar el concepto
+                DE_TEMAX_VAHI1: getData("edad_max") || null, // Edad máxima del paciente para habilitar el concepto
+                ANTE_ALERG: 0, // Se deja por defecto (0)
+                NU_TIPOEDAD_VAHI1: parseInt(getData("tipo_edad")) || 1, // Tipo edad para restricción de campos 1,2,3 => Años,meses,días
+                ES_EDITABLE_VAHI1: 1
+            },
+    
+            pathValcon2: {
+                NU_NUME_COHI_VAHI2: component.idConceptoDB, // Código del concepto
+                NU_NUME_PLHI_VAHI2: idRelacion, // Código de la relación del concepto
+                NU_LONG_VAHI2: parseInt(getData("maxlength")) || null, // Longitud máxima de carácteres permitidos (texto, memo, numérico)
+                NU_VALI_VAHI2: null, // se deja null
+                DE_TMAX_VAHI2: getData("max") || null, // Valor máximo que se puede diligenciar en tipo numérico
+                DE_TMIN_VAHI2: getData("min") || null, // Valor mínimo que se puede diligenciar en tipo numérico
+                DE_VDEF_VAHI2: getData("value") || null // Valor o texto por defecto que tendrá un concepto
+            }
+
+        }
+
+        // Los siguiente valores de la documentación no los tengo en la base de datos: ‘DE_RANMIN_VAHI2’, ‘DE_RANMAX_VAHI2’, ‘LISTA_COMPARA_VAHI2’
+
+        // Proceder con la creación
+        for(let valConc in validaciones) {
+            const resp = fetch(endPoint + "/" + valConc, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "Application/json"
+                },
+                body: JSON.stringify(validaciones[valConc])
+            }).then(d => d.json());
+
+            console.log(resp);
+        }
+    }
+
     async actualizarConcepto(formData) {
         const conceptoCreado = await fetch(endPoint + "/updateConcepto", {
             method: "PUT",
@@ -140,6 +265,26 @@ class ConceptoHist {
         });
 
         return conceptoCreado;
+    }
+
+    async actualizarConceptoTipoLista(idConcepto, relacion) {
+        const actualizar = {
+            TX_TBLBASE_COHI: "LISTA_OPCION",
+            TX_CODBASE_COHI: "ID_AUTO_OPCIO",
+            TX_NOMBASE_COHI: "TX_DESC_OPCI",
+            TX_CONDBAS_COHI: `TX_GRUP_OPCI=''${relacion}''`,
+            NU_NUME_COHI: idConcepto
+        }
+
+        const resp = await fetch(endPoint + "/actualizarConceptoTipoLista", {
+            method: "POST",
+            headers: {
+                "Content-Type": "Application/json"
+            },
+            body: JSON.stringify(actualizar)
+        }).then(d => d.json());
+
+        return resp;
     }
 
     unshift(obj) {

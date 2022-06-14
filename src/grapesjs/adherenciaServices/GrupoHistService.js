@@ -122,6 +122,8 @@ class GrupoHist {
         }
 
         console.log("Enviando grupo => ", toSend)
+
+        return;
         return fetch(endPoint + "/createRelGrupo", {
             method: "POST",
             headers: {

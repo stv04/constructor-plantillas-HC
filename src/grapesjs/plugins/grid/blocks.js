@@ -1,4 +1,4 @@
-import { typeInput } from "../../types/formTypes.js";
+import { typeForm, typeInput } from "../../types/formTypes.js";
 import { typeCol1, typeCol2, typeCol3, typeCol4, typeCol6,  typeConcepto,  typeGrupo,  typeRotulo,  typeRow } from "../../types/gridTypes.js";
 
 const styleMinHeight = '<style>.min-h{min-height: 70px}</style>'
@@ -6,8 +6,9 @@ const styleMinHeight = '<style>.min-h{min-height: 70px}</style>'
 export default (editor, opts) => {
     const bm = editor.BlockManager;
     const category = {
+        open: false,
         id: "complement",
-        label: "Complementos"
+        label: "Complementos",
     }
 
     // 1 column
@@ -20,6 +21,7 @@ export default (editor, opts) => {
                 {type: typeRotulo},
                 {
                     type: typeConcepto,
+                    attributes: {style: "margin-left: 200px"},
                     components: [
                         {type: typeRotulo, content: "Seleccione concepto"},
                         {type: typeInput}
@@ -29,7 +31,7 @@ export default (editor, opts) => {
             ],
             isImportant: true,
         },
-        category
+        category: ""
     });
 
     bm.add(typeConcepto, {
@@ -553,4 +555,118 @@ export default (editor, opts) => {
             </svg>`]
         }
     })
+
+
+
+    
+    // Ediciones Harold
+    const typeFormula = "formula";
+    bm.add(typeFormula, {
+        label: "FORMUAL",
+        attributes: {class:'gjs-fonts gjs-f-b1'},
+        content: {
+            type: typeConcepto,
+            components: [
+                {type: typeRotulo, content: "Seleccione lo que quiera"},
+                {type: "formulaConc", attributes: {"data-concepto_especial": "form"}}
+            ],
+            isImportant: true,
+        },
+        category
+    })
+
+    bm.add("Grafica", {
+        label: "Gráfica",
+        attributes: { class: 'gjs-fonts gjs-f-b1 gjs-concepts' },
+        content: {
+            type: typeConcepto,
+            attributes: { 'data-type_concept': "Grafica" },
+            components: [
+                { type: typeRotulo, content: "Gráfica" },
+                { 
+                    type: "typeGrafica", 
+                    attributes: { src: "https://st.depositphotos.com/1515224/1256/i/950/depositphotos_12569702-stock-photo-light-bulb.jpg", "data-concepto_especial": "grafica" },
+                    style: {
+                        height: "600px",
+                        width: "150px",
+                        "min-height": "1000px",
+                        "max-height": "1000px",
+                        "min-width": "1000px",
+                        "max-width": "1000px",
+                    }
+                },
+                //Es un lienzo tipo paint, donde se carga una imagen según una selección, para su posterior edición con el uso del paint.
+            ],
+            isImportant: true,
+        },
+        category
+    });
+
+    function buildCeldaTabla(isEncabezado) {
+        return { 
+          type: "celdaTabla", 
+          selectable: isEncabezado ? false : true,
+          tagName: isEncabezado ? "th" : "td",
+          components: { 
+            copyable: false,
+            draggable: false,
+            droppable: false,
+            stylable: false,
+            components: isEncabezado ? "Encabezado" : "Contenido", 
+            style: {
+              width: "100%",
+              margin: 0,
+              padding: 0
+            },
+            tagName: "p",
+            type: "text",
+            attributes: {"data-tipo": 6},
+          }
+        }
+    }
+    
+    //CONCEPTO DE TIPO TABLE
+    bm.add("table", {
+        label: "Tabla",
+        content: {
+            type: "table",
+            idConceptoDB: 23021,
+            classes: "table",
+            attributes: { style: "position: absolute;" },
+
+            components: [
+                {
+                    type: "thead",
+                    selectable: false,
+                    components: {
+                        type: "row",
+                        draggable: false,
+                        droppable: false,
+                        selectable: false,
+                        components: [
+                            buildCeldaTabla(true), buildCeldaTabla(true)
+                        ]
+                    }
+
+                },
+                {
+                    type: "tbody",
+                    selectable: false,
+                    components: [{
+                        type: "row",
+                        draggable: false,
+                        droppable: false,
+                        components: [
+                            buildCeldaTabla(),
+                            buildCeldaTabla()
+                        ]
+                    }]
+
+                },
+            ],
+            isImportant: true,
+
+        },
+        category
+    });
 }

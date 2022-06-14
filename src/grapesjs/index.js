@@ -106,3 +106,8 @@ globalThis.editor = grapesjs.init({
   // },
   // style: styles,
 });
+
+editor.toJson = function () {
+  console.log(this);
+  return JSON.parse(JSON.stringify(this.getComponents()));
+}
