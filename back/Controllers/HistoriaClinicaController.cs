@@ -50,9 +50,62 @@ public class HistoriaClinicaController : ControllerBase
             await context.HISTORIA_CLINICA.AddAsync(historiaClinica);
             await context.SaveChangesAsync();
 
-            return Ok("Historia clínica creada exitósamente");
+            return Ok(historiaClinica);
         } catch {
             return BadRequest("Directo al catch");
+        }
+    }
+
+    [HttpGet("ObtenerHcPorDocExtDeAfiliado/{idAfiliado}")]
+    public IActionResult GetHcPorDocExtAfil(int idAfiliado, int? idDocumentoExterno) 
+    {
+        try
+        {
+            if(idDocumentoExterno == null) return BadRequest("Recuerda el id del documento externo a consultar.");
+
+            List<int?> idsHistoraiClinica = (from Hc in context.HISTORIA_CLINICA
+            where Hc.NU_IDAFILIADO_HC == idAfiliado
+            select Hc.NU_IDHISTORIACLINICA_HC).ToList();
+
+            List<HISTCLIN_X_DOCEXT> docAsociadosHC = new();
+
+            idsHistoraiClinica.ForEach(idHistoraClinica => {
+                Console.WriteLine(idHistoraClinica);
+                List<HISTCLIN_X_DOCEXT> docExtPorHist = (from HcDe in context.HISTCLIN_X_DOCEXT
+                where HcDe.NU_IDHISTORIACLINICA_HCXDE == idHistoraClinica
+                && HcDe.NU_IDDOCEXTERNO_HCXDE == idDocumentoExterno
+                select HcDe).ToList();
+
+                docAsociadosHC.AddRange(docExtPorHist);
+            });
+
+            return Ok(docAsociadosHC);
+        }
+        catch
+        {
+            return BadRequest("Esto está mal");
+        }
+    }
+
+    [HttpPost("HcPorDocExt")]
+    public async Task<IActionResult> Post([FromBody] HISTCLIN_X_DOCEXT laHCXDE)
+    {
+        try
+        {
+            if (laHCXDE != null)
+            {
+                await context.HISTCLIN_X_DOCEXT.AddAsync(laHCXDE);
+                await context.SaveChangesAsync();
+                return Ok("Listo");
+            }
+            else
+            {
+                return NoContent();
+            }
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
         }
     }
 }

@@ -13,5 +13,7 @@ namespace back.context
         public DbSet<DocumentosPorFormulario> DOCUMENTOS_X_FORMULARIO {get; set;}
         public DbSet<DocumentoExterno> DOCUMENTOS_EXTERNOS {get; set;}
 
+        public DbSet<HISTCLIN_X_DOCEXT> HISTCLIN_X_DOCEXT {get; set;}
+
     }
 }
