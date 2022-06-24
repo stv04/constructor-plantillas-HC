@@ -3,6 +3,7 @@ import { typeConcepto, typeGrupo, typeRotulo, typeRotuloGrupo } from "../types/g
 import conceptoHistService from "../adherenciaServices/conceptoHistService.js";
 import GrupoHistService from "../adherenciaServices/GrupoHistService.js";
 import modalEditConcepto from "./modalEditConcepto.js";
+import PlantillaHistService from "../adherenciaServices/PlantillaHistService.js";
 
 
 export default {
@@ -120,8 +121,48 @@ export default {
           filas.forEach(fila => fila.getLastChild().remove());
         }
       }, {
+        id: "guardado-parcial",
+        run(editor) {PlantillaHistService.guardadoParcial(editor)}
+      }, {
+        id: "llenado-formato",
+        run(editor) {PlantillaHistService.llenadoFormato(editor)}
+      }, {
         id: "save-json",
         run(editor) {guardar(editor)}
+      }, {
+        id: "guardar-imagen",
+        run(editor) {
+          const modalAgregarImagen = (modal) => {
+            const contenedor = document.createElement("div");
+            const form = document.createElement("form");
+        
+            form.innerHTML = `
+        
+                <input type="file" name="archivo">
+                
+                <button type="submit" class="btn btn-primary">Añadir archivo</button>
+            `;
+        
+            form.addEventListener("submit", async e => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+        
+                conceptoHistService.agregarArchivo(formData);
+        
+                modal.close();
+            });
+        
+            contenedor.appendChild(form);
+            return contenedor;
+          }
+
+          const modal = editor.Modal;
+          modal.open({
+            title: "Agregar imágen",
+          });
+
+          modal.setContent(modalAgregarImagen(modal))
+        }
       }
     ]
 }
@@ -495,6 +536,8 @@ function depureTable(components, idParent, nuRow = 0) {
 
   return res;
 }
+
+
 
 
 function buildFilaTabla(nuCols) {

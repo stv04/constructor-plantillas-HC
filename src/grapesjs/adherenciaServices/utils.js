@@ -1,4 +1,52 @@
 const quitHash = hexa => hexa.replace("#", "");
+
+function formatColor(clr, def) {
+	if(!clr) return def;
+  let colorExa = def;
+  const initial = "#FF";
+
+	if(/rgb/.test(clr)) {
+  	const reColores = /\d+/g;
+    const colores = clr.match(reColores);
+    if(colores.length === 4) colores.pop();
+    
+      colorExa = colores.reduce((a,b) => {
+        const color = parseInt(b);
+        let actual = color.toString(16).toUpperCase();
+        
+        if(isNaN(color) || color < 0) {
+          actual = "00"
+        } else if(color > 255) {
+          actual = "FF"
+        }
+        
+        actual = actual.length === 1 ? "0" + actual : actual;
+        return a += actual;
+      }, initial)
+  	} else {
+  		colorExa = initial + clr.replace("#", "");
+  	}
+  
+  console.log(colorExa);
+  return colorExa;
+}
+
+function setBorders(style) {
+	const borderPositions = ["left", "top", "right", "bottom"];
+  
+  if(style.border) return "0;0;0;0";
+  
+  const formedBorder = borderPositions.map(b => {
+  	const borderWidth = style["border-"+b+"width"];
+    const borderPos = style["border-"+b];
+    
+    return borderWidth || borderPos ? 1 : 0
+  }).join(";");
+  
+  console.log(formedBorder);
+  return formedBorder;
+}
+
 const getPropertiesRotulo = rotulo => {
     const definiciones = [
       "0:background-color", "1:color", "2:total_ancho", "3:text-align", "4:rotuloPerpen",
@@ -16,8 +64,8 @@ const getPropertiesRotulo = rotulo => {
       const textAlign = style["text-align"];
   
   
-      if(backgroundColor) valores[0] = "#FF" + quitHash(backgroundColor);
-      if(color) valores[1] = "#FF" + quitHash(color);
+      if(backgroundColor) valores[0] = formatColor(backgroundColor, valores[0]);
+      if(color) valores[1] = formatColor(color, valores[1]);
       if(display === "none") valores[5] = 0;
       if(fontWeigth > 500) valores[6] = 1;
       if(fontSize) valores[8] = parseInt(fontSize);
@@ -34,4 +82,4 @@ const convert_px_to_tw = px => {
     return Math.round(pixel * 567 / 37.7952)
 }
 
-export {quitHash, getPropertiesRotulo, convert_px_to_tw};
+export {quitHash, getPropertiesRotulo, convert_px_to_tw, setBorders};

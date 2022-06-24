@@ -27,6 +27,7 @@ namespace back.models
         public int CD_CODI_FIN { get; set; }
         public string CD_NOMB_FIN { get; set; }
     }
+    
 
     public class RPlantillaHist
     {
@@ -45,5 +46,15 @@ namespace back.models
         public int? NU_TIEDF_PLHI {get; set;}
         public int? NU_TIEDI_PLHI {get; set;}
         public int? NU_VICA_PLHI {get; set;}
+    }
+
+    public class TemporalParametrizador
+    {
+        [Key]
+        public int NU_NUME_PLHI_TEMPAR { get; set; }
+        public string? TX_JSON_TEMPAR { get; set; }
+        public string? TX_HTML_TEMPAR { get; set; }
+        public string? TX_CSS_TEMPAR { get; set; }
+        public string? TX_JS_TEMPAR { get; set; }
     }
 }

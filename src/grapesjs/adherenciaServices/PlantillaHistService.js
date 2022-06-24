@@ -51,6 +51,70 @@ class Plantillahist {
 
         return respuesta;
     }
+
+    async guardadoParcial(editor) {
+        const TX_CSS_TEMPAR = editor.getCss({avoidProtected: true});
+        const TX_JS_TEMPAR = editor.getJs();
+        const TX_HTML_TEMPAR = editor.getHtml();
+        const TX_JSON_TEMPAR = JSON.stringify(editor.getComponents());
+        
+        const guardado = {
+          NU_NUME_PLHI_TEMPAR: this.idPlantillaHist,
+          TX_JSON_TEMPAR,
+          TX_HTML_TEMPAR,
+          TX_CSS_TEMPAR,
+          TX_JS_TEMPAR
+        }
+
+        console.log(guardado);
+        return;
+      
+        const resp = await fetch(endPoint + "/plantillaTemporal", {
+            method: "POST",
+            headers: {
+                "Content-Type": "Application/json"
+            },
+            body: JSON.stringify(guardado)
+        }).then(d => d.json());
+
+        if(resp.ok) {
+            console.log(resp.message);
+        } else {
+            console.log(resp);
+            console.log(resp.message);
+        }
+    }
+    
+    async llenadoFormato(editor) {
+        const formatoTemporal = await fetch(endPoint + "/plantillaTemporal?idPlantilla="+this.idPlantillaHist).then(d => d.json());
+
+        if(!formatoTemporal.nU_NUME_PLHI_TEMPAR) {
+            console.log(formatoTemporal);
+        }
+
+        const html = formatoTemporal.tX_HTML_TEMPAR;
+        const css = formatoTemporal.tX_CSS_TEMPAR;
+        const js = formatoTemporal.tX_JS_TEMPAR;
+        const json = formatoTemporal.tX_JSON_TEMPAR;
+
+        console.log(JSON.parse(json));
+
+        editor.setStyle(css);
+        editor.setComponents(JSON.parse(json))
+
+        if(js) editor.setComponents("<script>" + js + "</script>");
+    }
+
+    async listarArchivos() {
+        const archivos = await fetch(endPoint + "/ListarArchivos").then(d => d.json());
+        console.log(archivos);
+    }
+
+    async agregarArchivo() {
+        const arch = await fetch(endPoint + "/ListarArchivos").then(d => d.json());
+    }
+
+    
 }
 
 export default new Plantillahist();

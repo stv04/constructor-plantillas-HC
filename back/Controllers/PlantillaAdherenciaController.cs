@@ -238,4 +238,41 @@ public class PlantillaAdherenciaController : ControllerBase
         }
     }
 
+    //Manejador del archivo temporal
+    [HttpGet("plantillaTemporal")]
+    public async Task<IActionResult> GetPlantillaTemporal(int? idPlantilla) {
+        try {
+            if(idPlantilla != null) {
+                var x = await context.TEMPORAL_PARAMETRIZADOR.FirstOrDefaultAsync(f => f.NU_NUME_PLHI_TEMPAR == idPlantilla);
+                return Ok(x);
+            } else {
+                var x = from Y in context.TEMPORAL_PARAMETRIZADOR
+                    orderby Y.NU_NUME_PLHI_TEMPAR descending
+                    select Y.NU_NUME_PLHI_TEMPAR;
+                
+                return Ok(x);
+            }
+        } catch {
+            return BadRequest("Problemas :/");
+        }
+    }
+
+    [HttpPost("plantillaTemporal")]
+    public async Task<IActionResult> GuardarPlantillaTemporal([FromBody] TemporalParametrizador temporal) {
+        try {
+            var temporalGuardado = context.TEMPORAL_PARAMETRIZADOR.FirstOrDefault(f => f.NU_NUME_PLHI_TEMPAR == temporal.NU_NUME_PLHI_TEMPAR);
+            if(temporalGuardado == null) {
+                await context.TEMPORAL_PARAMETRIZADOR.AddAsync(temporal);
+            } else {
+                Console.WriteLine("Este es un numero => " + temporalGuardado.NU_NUME_PLHI_TEMPAR);
+                context.TEMPORAL_PARAMETRIZADOR.Update(temporal);
+            }
+
+            await context.SaveChangesAsync();
+
+            return Ok("¡Relación agregada correctamente!");
+        } catch {
+            return BadRequest("Se hizo lo mejor que se pudo");
+        }
+    }
 }

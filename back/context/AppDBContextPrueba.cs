@@ -16,6 +16,7 @@ namespace back.context
         public DbSet<FinalidadHist> FINALIDAD_HIST {get; set;}
         public DbSet<RPlantillaHist> R_PLANTILLA_HIST {get; set;}
         public DbSet<ListaOpcionesConceptos> LISTA_OPCION {get; set;}
+        public DbSet<TemporalParametrizador> TEMPORAL_PARAMETRIZADOR {get; set;}
 
     }
 }
